@@ -15,7 +15,7 @@ public class Game {
 	}
 	
 	public void startgame() {
-		System.out.println("butts");
+		System.out.println("poop");
 		String name = ui.getUserInput();
 		Player hero = new Player(name);
 		Enemy baddie = new Enemy("Jelli", MonsterStats[0]);

@@ -1,56 +1,73 @@
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Game {
 	
 	private IUIEngine ui;
-	public static int[][] MonsterStats = { 
-			/*Jelli*/ {5, 1, 1, 55},
-			/*Big Jelli*/ {10, 2, 2, 10},
-			/*Batz*/ {8, 3, 1, 15}
-	};
-
+	public TileMap world;
+	public boolean isPlaying;
 	
 	public Game(IUIEngine ui) {
 		this.ui = ui;
+		world = new TileMap("Overworld");
+		isPlaying = true;
 	}
 	
 	public void startgame() {
 		System.out.println("butts");
 		String name = ui.getUserInput();
 		Player hero = new Player(name);
-		Enemy baddie = new Enemy("Jelli", MonsterStats[0]);
-		battle(hero, baddie);
+		while(isPlaying) {
+			ui.updateScreen(world, hero);
+			movePlayer(ui.getUserInput(), world, hero);
+		}
+		//battle(hero, baddie);
 	}
 	
-	public void battle(Player player, Enemy enemy) {
-		boolean battling = true;
-		int turn = 0;
-		String command;
-		ui.displayDialogue(String.format("Battle has bebun! %s has attacked!", enemy.getName()));
-		
-		while(battling) {
-			turn += 1;
-			ui.displayDialogue(String.format("\nTurn: %d\n", turn));
-			ui.displayDialogue(player.getCombatInfo());
-			ui.displayDialogue(enemy.getCombatInfo());
-			command = ui.getUserInput();
-			if(command.equals("attack")) {
-				player.dealDamage(enemy);
-				if(enemy.HP == 0) {
-					ui.displayDialogue(String.format("Battle end. %s wins!\n", player.getName()));
-					ui.displayDialogue(String.format("%s gets %d experience!\n", player.getName(), enemy.experience));
-					player.experience += enemy.experience;
-					player.levelUp();
-					battling = false;
-					return;
-				}
+	public boolean canMove(String direction, TileMap world, Player p) {
+		if(direction.equals("right")) {
+			return world.map[(int)p.position.getY()][(int)p.position.getX() + 1].isOpen;
+		}
+		if(direction.equals("left")) {
+			return world.map[(int)p.position.getY()][(int)p.position.getX() - 1].isOpen;
+		}
+		if(direction.equals("down")) {
+			return world.map[(int)p.position.getY() + 1][(int)p.position.getX()].isOpen;
+		}
+		if(direction.equals("up")) {
+			return world.map[(int)p.position.getY() - 1][(int)p.position.getX()].isOpen;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public void movePlayer(String direction, TileMap world, Player p) {
+		if(canMove(direction, world, p)) {
+			world.map[(int)p.position.getY()][(int)p.position.getX()].isOpen = true;
+			switch(direction) {
+			case "right":	world.map[(int)p.position.getY()][(int)p.position.getX() + 1].isOpen = false;
+							p.position.move((int)p.position.getX()+1, (int)p.position.getY());
+							break;
+			case "left":	world.map[(int)p.position.getY()][(int)p.position.getX() - 1].isOpen = false;
+							p.position.move((int)p.position.getX() - 1, (int)p.position.getY());
+							break;
+			default:		break;
 			}
-			enemy.dealDamage(player);
-			if(player.HP == 0) {
-				ui.displayDialogue("Battle end. Game over...");
-				battling = false;
+			Enemy encounter = world.map[(int)p.position.getY()][(int)p.position.getX()].enemyEncounter(p);
+			if(encounter != null) {
+				engageBattle(p, encounter);
 			}
 		}
+		else {
+			ui.displayDialogue("Wall!");
+		}
+		
+	}
+	
+	public void engageBattle(Player p, Enemy e) {
+		Battle b = new Battle(p, e, ui);
+		b.battle(p, e);
 	}
 	
 	public static void main(String[] args) {

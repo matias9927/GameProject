@@ -1,9 +1,10 @@
+import java.io.IOException;
 
 public class EventTile extends Tile{
 	
 	private String effect;
 	
-	EventTile(TileType t){
+	EventTile(TileType t) {
 		super(t);
 		effect = "";
 	}

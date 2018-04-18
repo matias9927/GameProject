@@ -1,10 +1,10 @@
+import java.awt.Point;
 import java.util.ArrayList;
 
 public class Player extends CombatCharacter{
 	
 	public ArrayList<Item> inventory = new ArrayList<Item>();
-	private int xPos;
-	private int yPos;
+	Point position = new Point(2,2);
 	
 	Player(String CharName){
 		super(CharName);
@@ -34,10 +34,6 @@ public class Player extends CombatCharacter{
 		}
 	}
 	
-	public void move() {
-		//Take keyboard input and move character
-	}
-	
 	public void interact() {
 		//Pressing z initiated interaction with npcs or objects
 	}
@@ -46,12 +42,8 @@ public class Player extends CombatCharacter{
 		//Add item to inventory
 	}
 	
-	public int getX() {
-		return xPos;
-	}
-	
-	public int getY() {
-		return yPos;
+	public Point getPosition() {
+		return position;
 	}
 
 }

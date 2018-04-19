@@ -34,9 +34,9 @@ public class TileMap extends Location{
 		for(int i = 0; i < map.length; i++) {
 			for(int j = 0; j < map.length ; j++) {
 				map[i][0] = new Tile(Tile.TileType.MOUNTAIN);
-				map[i][9] = new Tile(Tile.TileType.MOUNTAIN);
+				map[i][map.length - 1] = new Tile(Tile.TileType.MOUNTAIN);
 				map[0][j] = new Tile(Tile.TileType.MOUNTAIN);
-				map[9][j] = new Tile(Tile.TileType.MOUNTAIN);
+				map[map.length - 1][j] = new Tile(Tile.TileType.MOUNTAIN);
 				
 			}
 		}	

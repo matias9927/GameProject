@@ -14,14 +14,14 @@ public class Game {
 	}
 	
 	public void startgame() {
-		System.out.println("butts");
+		System.out.println("What is your name?");
 		String name = ui.getUserInput();
 		Player hero = new Player(name);
 		while(isPlaying) {
 			ui.updateScreen(world, hero);
-			movePlayer(ui.getUserInput(), world, hero);
+			//movePlayer(ui.getUserInput(), world, hero);
+			movePlayer(ui.movePlayer(), world, hero);
 		}
-		//battle(hero, baddie);
 	}
 	
 	public boolean canMove(String direction, TileMap world, Player p) {
@@ -38,6 +38,7 @@ public class Game {
 			return world.map[(int)p.position.getY() - 1][(int)p.position.getX()].isOpen;
 		}
 		else {
+			ui.displayDialogue("Invalid move");
 			return false;
 		}
 	}
@@ -46,13 +47,24 @@ public class Game {
 		if(canMove(direction, world, p)) {
 			world.map[(int)p.position.getY()][(int)p.position.getX()].isOpen = true;
 			switch(direction) {
-			case "right":	world.map[(int)p.position.getY()][(int)p.position.getX() + 1].isOpen = false;
-							p.position.move((int)p.position.getX()+1, (int)p.position.getY());
-							break;
-			case "left":	world.map[(int)p.position.getY()][(int)p.position.getX() - 1].isOpen = false;
-							p.position.move((int)p.position.getX() - 1, (int)p.position.getY());
-							break;
-			default:		break;
+			case "right":
+					world.map[(int)p.position.getY()][(int)p.position.getX() + 1].isOpen = false;
+					p.position.move((int)p.position.getX()+1, (int)p.position.getY());
+					break;
+			case "left":	
+					world.map[(int)p.position.getY()][(int)p.position.getX() - 1].isOpen = false;
+					p.position.move((int)p.position.getX() - 1, (int)p.position.getY());
+					break;
+			case "down":	
+					world.map[(int)p.position.getY() + 1][(int)p.position.getX()].isOpen = false;
+					p.position.move((int)p.position.getX(), (int)p.position.getY() + 1);
+					break;
+			case "up":	
+				world.map[(int)p.position.getY() - 1][(int)p.position.getX()].isOpen = false;
+				p.position.move((int)p.position.getX(), (int)p.position.getY() - 1);
+				break;
+			default:
+				break;
 			}
 			Enemy encounter = world.map[(int)p.position.getY()][(int)p.position.getX()].enemyEncounter(p);
 			if(encounter != null) {

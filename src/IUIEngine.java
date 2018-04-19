@@ -7,6 +7,7 @@ public interface IUIEngine {
 	
 	void displayDialogue(String d);
 	
+	String movePlayer();
 	
 
 }

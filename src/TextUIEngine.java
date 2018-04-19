@@ -7,8 +7,8 @@ public class TextUIEngine implements IUIEngine{
 	
 	public void updateScreen(TileMap world, Player p) {
 		world.checkPlayerTile(p);
-		for(int i = 0; i < 10; i++) {
-			for(int j = 0; j < 10; j++) {
+		for(int i = 0; i < world.map.length; i++) {
+			for(int j = 0; j < world.map.length; j++) {
 				System.out.print(world.map[i][j]);
 			}
 			System.out.println();
@@ -21,6 +21,10 @@ public class TextUIEngine implements IUIEngine{
 	public String getUserInput() {
 		System.out.println("Enter and action");
 		return input.nextLine();
+	}
+	
+	public String movePlayer() {
+		return getUserInput();
 	}
 
 }

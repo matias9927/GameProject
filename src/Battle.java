@@ -40,6 +40,7 @@ public class Battle {
 				battling = false;
 			}
 		}
+		enemy.HP = enemy.maxHP;
 	}
 
 }

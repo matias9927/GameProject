@@ -1,5 +1,9 @@
 import java.awt.Point;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 
 public class Player extends CombatCharacter{
 	
@@ -16,6 +20,12 @@ public class Player extends CombatCharacter{
 
 		HP = maxHP;
 		//MP = maxMP;
+		
+		try {
+			sprite = ImageIO.read(new File("player.png"));
+		} catch(IOException e) {
+			System.out.println("Image not found!");
+		}
 	}
 	
 	public void levelUp() {

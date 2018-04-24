@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 
 public class GUIEngine implements IUIEngine, KeyListener{
 	
+	int SCALING = 50;
 	Scanner input = new Scanner(System.in);
 	private JFrame frame;
 	private JPanel panel;
@@ -40,8 +41,8 @@ public class GUIEngine implements IUIEngine, KeyListener{
 			System.out.println();
 		}
 		
-		draw(panel.getGraphics(), p);
 		draw(panel.getGraphics(), world);
+		draw(panel.getGraphics(), p);
 	}
 	
 	public void displayDialogue(String d) {
@@ -85,7 +86,7 @@ public class GUIEngine implements IUIEngine, KeyListener{
 	}
 	
 	public void draw(Graphics g, Player p) {
-		g.drawImage(p.sprite, p.getPosition().x, p.getPosition().y, 200, 200, null);
+		g.drawImage(p.sprite, p.getPosition().x * 50, p.getPosition().y * 50, 50, 50, null);
 	}
 	
 	public void draw(Graphics g, TileMap w) {

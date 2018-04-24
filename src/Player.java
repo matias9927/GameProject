@@ -22,7 +22,7 @@ public class Player extends CombatCharacter{
 		//MP = maxMP;
 		
 		try {
-			sprite = ImageIO.read(new File("src\\Sprites\\player.png"));
+			sprite = ImageIO.read(new File("src\\Sprites\\overworld_player_straight.png"));
 		} catch(IOException e) {
 			System.out.println("Image not found!");
 		}

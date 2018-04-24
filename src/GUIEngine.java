@@ -32,7 +32,6 @@ public class GUIEngine implements IUIEngine, KeyListener{
 	}
 	
 	public void updateScreen(TileMap world, Player p) {
-		//draw(g, p);
 		world.checkPlayerTile(p);
 		for(int i = 0; i < 10; i++) {
 			for(int j = 0; j < 10; j++) {
@@ -40,6 +39,9 @@ public class GUIEngine implements IUIEngine, KeyListener{
 			}
 			System.out.println();
 		}
+		
+		draw(panel.getGraphics(), p);
+		draw(panel.getGraphics(), world);
 	}
 	
 	public void displayDialogue(String d) {
@@ -47,7 +49,7 @@ public class GUIEngine implements IUIEngine, KeyListener{
 	}
 	
 	public String movePlayer() {
-		return "right";
+		return getUserInput();
 	}
 
 	@Override
@@ -83,7 +85,17 @@ public class GUIEngine implements IUIEngine, KeyListener{
 	}
 	
 	public void draw(Graphics g, Player p) {
-		g.drawImage(p.sprite, p.getPosition().x, p.getPosition().y, 20, 20, null);
+		g.drawImage(p.sprite, p.getPosition().x, p.getPosition().y, 200, 200, null);
+	}
+	
+	public void draw(Graphics g, TileMap w) {
+		Tile t;
+		for(int j = 0; j < 10; j++) {
+			for(int i = 0; i < 10; i++) {
+				g.drawImage(w.map[i][j].sprite, i * 50, j * 50, 50, 50, null);
+				System.out.println(i + ", " + j);
+			}
+		}
 	}
 
 }

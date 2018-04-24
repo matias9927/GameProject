@@ -22,7 +22,7 @@ public class Player extends CombatCharacter{
 		//MP = maxMP;
 		
 		try {
-			sprite = ImageIO.read(new File("player.png"));
+			sprite = ImageIO.read(new File("src\\Sprites\\player.png"));
 		} catch(IOException e) {
 			System.out.println("Image not found!");
 		}

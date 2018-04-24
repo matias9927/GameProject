@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Scanner;
@@ -31,6 +32,7 @@ public class GUIEngine implements IUIEngine, KeyListener{
 	}
 	
 	public void updateScreen(TileMap world, Player p) {
+		//draw(g, p);
 		world.checkPlayerTile(p);
 		for(int i = 0; i < 10; i++) {
 			for(int j = 0; j < 10; j++) {
@@ -78,6 +80,10 @@ public class GUIEngine implements IUIEngine, KeyListener{
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void draw(Graphics g, Player p) {
+		g.drawImage(p.sprite, p.getPosition().x, p.getPosition().y, 20, 20, null);
 	}
 
 }

@@ -83,7 +83,7 @@ public class Game {
 	}
 	
 	public static void main(String[] args) {
-		Game game = new Game(new TextUIEngine()); 
+		Game game = new Game(new GUIEngine()); 
 		game.startgame();
 	}
 

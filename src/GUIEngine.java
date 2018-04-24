@@ -1,12 +1,29 @@
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Scanner;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class GUIEngine implements IUIEngine, KeyListener{
 	
 	Scanner input = new Scanner(System.in);
+	private JFrame frame;
+	private JPanel panel;
+	
+	public GUIEngine() {
+		frame = new JFrame("Window");
+		frame.setVisible(true);
+		frame.setSize(1000, 800);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		panel = new JPanel();
+		panel.setBackground(Color.BLUE);
+		panel.setVisible(true);
+		
+		frame.add(panel);
+	}
 	
 	public String getUserInput() {
 		System.out.println("Enter and action");

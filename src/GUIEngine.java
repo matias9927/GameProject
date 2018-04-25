@@ -1,27 +1,37 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Scanner;
 
 import javax.swing.JFrame;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 public class GUIEngine implements IUIEngine, KeyListener{
 	
-	int SCALING = 50;
+	int SCALING = 75;
+	int SIZE = 750;
+	int BATTLE_SCRN_SIZE = 550;
 	Scanner input = new Scanner(System.in);
 	private JFrame frame;
-	private JPanel panel;
+	private JLayeredPane panel;
+	private JPanel bPanel;
 	
 	public GUIEngine() {
-		frame = new JFrame("Window");
+		frame = new JFrame();
+		frame.setUndecorated(true);
 		frame.setVisible(true);
-		frame.setSize(1000, 800);
+		frame.setSize(SIZE, SIZE);
+		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		panel = new JPanel();
+		panel = new JLayeredPane();
 		panel.setBackground(Color.BLUE);
+		panel.setMaximumSize(new Dimension(SIZE, SIZE));
 		panel.setVisible(true);
 		
 		frame.add(panel);
@@ -43,6 +53,10 @@ public class GUIEngine implements IUIEngine, KeyListener{
 		
 		draw(panel.getGraphics(), world);
 		draw(panel.getGraphics(), p);
+	}
+	
+	public void updateBattle(Player p, Enemy e) {
+		draw(bPanel.getGraphics(), e);
 	}
 	
 	public void displayDialogue(String d) {
@@ -86,17 +100,28 @@ public class GUIEngine implements IUIEngine, KeyListener{
 	}
 	
 	public void draw(Graphics g, Player p) {
-		g.drawImage(p.sprite, p.getPosition().x * 50, p.getPosition().y * 50, 50, 50, null);
+		g.drawImage(p.sprite, p.getPosition().x * SCALING, p.getPosition().y * SCALING, SCALING, SCALING, null);
 	}
 	
 	public void draw(Graphics g, TileMap w) {
-		Tile t;
 		for(int j = 0; j < 10; j++) {
 			for(int i = 0; i < 10; i++) {
-				g.drawImage(w.map[i][j].sprite, i * 50, j * 50, 50, 50, null);
-				System.out.println(i + ", " + j);
+				g.drawImage(w.map[i][j].sprite, i * SCALING, j * SCALING, SCALING, SCALING, null);
 			}
 		}
+	}
+	
+	public void draw(Graphics g, Enemy e) {
+		g.drawImage(e.sprite, bPanel.getX(), bPanel.getY() - SCALING, SCALING * 5, SCALING * 5, null);
+	}
+	
+	public void showBattleScreen() {
+		bPanel = new JPanel();
+		bPanel.setSize(BATTLE_SCRN_SIZE, BATTLE_SCRN_SIZE);
+		bPanel.setBackground(Color.BLUE);
+		bPanel.setLocation(frame.getWidth()/2 - BATTLE_SCRN_SIZE/2, frame.getHeight()/2 - BATTLE_SCRN_SIZE/2);
+		panel.add(bPanel);
+		panel.moveToFront(bPanel);
 	}
 
 }

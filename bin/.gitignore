@@ -2,3 +2,5 @@
 /GUIEngine.class
 /Battle.class
 /Sprites/
+/Player$orientation.class
+/BattleUI.class

@@ -9,5 +9,9 @@ public interface IUIEngine {
 	
 	String movePlayer();
 	
+	void showBattleScreen();
+	
+	void updateBattle(Player p, Enemy e);
+	
 
 }

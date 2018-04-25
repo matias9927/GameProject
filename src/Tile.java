@@ -44,7 +44,7 @@ public class Tile {
 	
 	public Enemy enemyEncounter(Player p) {
 		Random rand = new Random();
-		if(rand.nextInt(100) > 90) {
+		if(rand.nextInt(100) > 50) {
 			return monsters.get(0);
 		}
 		else {

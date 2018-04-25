@@ -15,6 +15,10 @@ public class TextUIEngine implements IUIEngine{
 		}
 	}
 	
+	public void updateBattle(Player p, Enemy e) {
+		//
+	}
+	
 	public void displayDialogue(String d) {
 		System.out.println(d);
 	}
@@ -25,6 +29,10 @@ public class TextUIEngine implements IUIEngine{
 	
 	public String movePlayer() {
 		return getUserInput();
+	}
+	
+	public void showBattleScreen() {
+		//pass
 	}
 
 }

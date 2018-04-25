@@ -1,3 +1,4 @@
+import java.awt.Image;
 import java.awt.Point;
 import java.io.File;
 import java.io.IOException;
@@ -9,6 +10,12 @@ public class Player extends CombatCharacter{
 	
 	public ArrayList<Item> inventory = new ArrayList<Item>();
 	Point position = new Point(2,2);
+	public enum orientation {RIGHT, LEFT, UP, DOWN};
+	public orientation direction = orientation.RIGHT; 
+	public Image right;
+	public Image left;
+	public Image up;
+	public Image down;
 	
 	Player(String CharName){
 		super(CharName);
@@ -22,10 +29,13 @@ public class Player extends CombatCharacter{
 		//MP = maxMP;
 		
 		try {
-			sprite = ImageIO.read(new File("src\\Sprites\\overworld_player_straight.png"));
+			down = ImageIO.read(new File("src\\Sprites\\overworld_player_straight.png"));
+			left =  ImageIO.read(new File("src\\Sprites\\overworld_player_left.png"));
+			right = ImageIO.read(new File("src\\Sprites\\overworld_player_right.png"));
 		} catch(IOException e) {
 			System.out.println("Image not found!");
 		}
+		sprite = down;
 	}
 	
 	public void levelUp() {

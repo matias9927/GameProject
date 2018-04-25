@@ -9,6 +9,7 @@ public class Battle {
 		player = p;
 		enemy = e;
 		this.ui = ui;
+		ui.showBattleScreen();
 	}
 	
 	public void battle(Player player, Enemy enemy) {
@@ -18,6 +19,7 @@ public class Battle {
 		ui.displayDialogue(String.format("Battle has begun! %s has attacked!", enemy.getName()));
 		
 		while(battling) {
+			ui.updateBattle(player, enemy);
 			turn += 1;
 			ui.displayDialogue(String.format("\nTurn: %d\n", turn));
 			ui.displayDialogue(player.getCombatInfo());

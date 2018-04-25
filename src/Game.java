@@ -50,14 +50,17 @@ public class Game {
 			case "right":
 					world.map[(int)p.position.getY()][(int)p.position.getX() + 1].isOpen = false;
 					p.position.move((int)p.position.getX()+1, (int)p.position.getY());
+					p.sprite = p.right;
 					break;
 			case "left":	
 					world.map[(int)p.position.getY()][(int)p.position.getX() - 1].isOpen = false;
 					p.position.move((int)p.position.getX() - 1, (int)p.position.getY());
+					p.sprite = p.left;
 					break;
 			case "down":	
 					world.map[(int)p.position.getY() + 1][(int)p.position.getX()].isOpen = false;
 					p.position.move((int)p.position.getX(), (int)p.position.getY() + 1);
+					p.sprite = p.down;
 					break;
 			case "up":	
 				world.map[(int)p.position.getY() - 1][(int)p.position.getX()].isOpen = false;
@@ -78,7 +81,7 @@ public class Game {
 	}
 	
 	public void engageBattle(Player p, Enemy e) {
-		Battle b = new Battle(p, e, ui);
+		Battle b = new Battle(p, e, ui); //new BattleUI()
 		b.battle(p, e);
 	}
 	

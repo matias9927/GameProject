@@ -1,3 +1,4 @@
+import java.util.concurrent.TimeUnit;
 
 public class Battle {
 	
@@ -23,7 +24,7 @@ public class Battle {
 			turn += 1;
 			ui.displayDialogue(String.format("\nTurn: %d\n", turn));
 			ui.displayDialogue(player.getCombatInfo());
-			ui.displayDialogue(enemy.getCombatInfo());
+			//ui.displayDialogue(enemy.getCombatInfo());
 			command = ui.getUserInput();
 			if(command.equals("attack")) {
 				player.dealDamage(enemy);
@@ -33,6 +34,12 @@ public class Battle {
 					player.experience += enemy.experience;
 					player.levelUp();
 					battling = false;
+					try {
+						TimeUnit.SECONDS.sleep(2);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						//
+					}
 					return;
 				}
 			}

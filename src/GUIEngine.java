@@ -2,24 +2,33 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Scanner;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 public class GUIEngine implements IUIEngine, KeyListener{
 	
 	int SCALING = 75;
 	int SIZE = 750;
-	int BATTLE_SCRN_SIZE = 550;
+	int BATTLE_SCRN_SIZE = 600;
 	Scanner input = new Scanner(System.in);
+	JTextField textIn = new JTextField(10);
 	private JFrame frame;
 	private JLayeredPane panel;
 	private JPanel bPanel;
+	private JPanel bTextPanel;
+	private JLabel statsText;
 	
 	public GUIEngine() {
 		frame = new JFrame();
@@ -38,8 +47,10 @@ public class GUIEngine implements IUIEngine, KeyListener{
 	}
 	
 	public String getUserInput() {
-		System.out.println("Enter and action");
-		return input.nextLine();
+		//return textIn.getText();
+		return JOptionPane.showInputDialog("Enter and action");
+		/*System.out.println("Enter and action");
+		return input.nextLine();*/
 	}
 	
 	public void updateScreen(TileMap world, Player p) {
@@ -60,6 +71,8 @@ public class GUIEngine implements IUIEngine, KeyListener{
 	}
 	
 	public void displayDialogue(String d) {
+		String e = "<html>" + d.replace("\n", "<br>") + "</html>";
+		statsText.setText(e);
 		System.out.println(d);
 	}
 	
@@ -116,12 +129,30 @@ public class GUIEngine implements IUIEngine, KeyListener{
 	}
 	
 	public void showBattleScreen() {
+		String stats = String.format("<html>%s<br>HP: %d/%d<br>ATK: %d<br>DEF: %d</html>", "Matoos", 5,5,3,3);
 		bPanel = new JPanel();
 		bPanel.setSize(BATTLE_SCRN_SIZE, BATTLE_SCRN_SIZE);
-		bPanel.setBackground(Color.BLUE);
+		bPanel.setBackground(Color.GREEN);
 		bPanel.setLocation(frame.getWidth()/2 - BATTLE_SCRN_SIZE/2, frame.getHeight()/2 - BATTLE_SCRN_SIZE/2);
+		bPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 10));
 		panel.add(bPanel);
 		panel.moveToFront(bPanel);
+		
+		bTextPanel = new JPanel();
+		bTextPanel.setSize(BATTLE_SCRN_SIZE, BATTLE_SCRN_SIZE/4);
+		bTextPanel.setBackground(Color.BLACK);
+		bTextPanel.setLocation(frame.getWidth()/2 - BATTLE_SCRN_SIZE/2, frame.getHeight()/2 + BATTLE_SCRN_SIZE/4);
+		bTextPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 10));
+		
+		
+		statsText = new JLabel(); //stats
+		statsText.setFont(new Font("Consolas",1,20));
+		statsText.setForeground(Color.WHITE);
+		bTextPanel.add(statsText);
+		//bTextPanel.add(textIn);
+		
+		panel.add(bTextPanel);
+		panel.moveToFront(bTextPanel);
 	}
 
 }

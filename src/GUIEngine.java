@@ -32,6 +32,7 @@ public class GUIEngine implements IUIEngine, KeyListener{
 	private JPanel bTextPanel;
 	private JLabel statsText;
 	private JLabel enemyStats;
+	private JPanel playerStatPanel;
 	
 	public GUIEngine() {
 		frame = new JFrame();
@@ -167,6 +168,12 @@ public class GUIEngine implements IUIEngine, KeyListener{
 		bTextPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 10));
 		
 		
+		playerStatPanel = new JPanel();
+		playerStatPanel.setSize(BATTLE_SCRN_SIZE/4, BATTLE_SCRN_SIZE/2);
+		playerStatPanel.setBackground(Color.BLACK);
+		playerStatPanel.setLocation(frame.getWidth()/4 - BATTLE_SCRN_SIZE/2, frame.getHeight()/4 - BATTLE_SCRN_SIZE);
+		playerStatPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 10));
+		
 		statsText = new JLabel(); //stats
 		statsText.setFont(new Font("Consolas",1,20));
 		statsText.setForeground(Color.WHITE);
@@ -175,11 +182,12 @@ public class GUIEngine implements IUIEngine, KeyListener{
 		enemyStats = new JLabel();
 		enemyStats.setFont(new Font("Consolas",1,20));
 		enemyStats.setForeground(Color.WHITE);
-		bTextPanel.add(enemyStats, 0 ,1);
-		//bTextPanel.add(textIn);
+		playerStatPanel.add(enemyStats);
 		
 		panel.add(bTextPanel);
-		panel.moveToFront(bTextPanel);
+		panel.add(playerStatPanel);
+		//panel.moveToFront(bTextPanel);
+		//panel.moveToFront(playerStatPanel);
 	}
 
 }

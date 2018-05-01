@@ -24,7 +24,7 @@ public class Battle {
 			turn += 1;
 			ui.displayDialogue(String.format("\nTurn: %d\n", turn));
 			ui.displayDialogue(player.getCombatInfo());
-			//ui.displayDialogue(enemy.getCombatInfo());
+			ui.displayEnemyStats(enemy.getCombatInfo());
 			command = ui.getUserInput();
 			if(command.equals("attack")) {
 				player.dealDamage(enemy);

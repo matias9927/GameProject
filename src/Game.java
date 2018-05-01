@@ -26,7 +26,7 @@ public class Game {
 	
 	public boolean canMove(String direction, TileMap world, Player p) {
 		if(direction.equals("right")) {
-			return world.map[(int)p.position.getY()][(int)p.position.getX() + 1].isOpen;
+			return world.map[p.position.y][(int)p.position.x + 1].isOpen;
 		}
 		if(direction.equals("left")) {
 			return world.map[(int)p.position.getY()][(int)p.position.getX() - 1].isOpen;
@@ -75,7 +75,7 @@ public class Game {
 			}
 		}
 		else {
-			ui.displayDialogue("Wall!");
+			//ui.displayDialogue("Wall!");
 		}
 		
 	}

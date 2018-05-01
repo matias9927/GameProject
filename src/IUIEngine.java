@@ -7,6 +7,8 @@ public interface IUIEngine {
 	
 	void displayDialogue(String d);
 	
+	void displayEnemyStats(String d);
+	
 	String movePlayer();
 	
 	void showBattleScreen();

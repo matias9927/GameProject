@@ -22,6 +22,11 @@ public class TextUIEngine implements IUIEngine{
 	public void displayDialogue(String d) {
 		System.out.println(d);
 	}
+	
+	public void displayEnemyStats(String d) {
+		System.out.println(d);
+	}
+	
 	public String getUserInput() {
 		System.out.println("Enter and action");
 		return input.nextLine();

@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Map;
@@ -30,6 +31,7 @@ public class GUIEngine implements IUIEngine, KeyListener{
 	private JPanel bPanel;
 	private JPanel bTextPanel;
 	private JLabel statsText;
+	private JLabel enemyStats;
 	
 	public GUIEngine() {
 		frame = new JFrame();
@@ -58,7 +60,7 @@ public class GUIEngine implements IUIEngine, KeyListener{
 		world.checkPlayerTile(p);
 		for(int i = 0; i < 10; i++) {
 			for(int j = 0; j < 10; j++) {
-				System.out.print(world.map[i + p.getPosition().x][j + p.getPosition().y]);
+				System.out.print(world.map[i + screenShift(p.getPosition().x)][j + screenShift(p.getPosition().y)]);
 			}
 			System.out.println();
 		}
@@ -74,6 +76,14 @@ public class GUIEngine implements IUIEngine, KeyListener{
 	public void displayDialogue(String d) {
 		String e = "<html>" + d.replace("\n", "<br>") + "</html>";
 		statsText.setText(e);
+		//enemyStats.setText(e);
+		System.out.println(d);
+	}
+	
+	public void displayEnemyStats(String d) {
+		String e = "<html>" + d.replace("\n", "<br>") + "</html>";
+		//statsText.setText(e);
+		enemyStats.setText(e);
 		System.out.println(d);
 	}
 	
@@ -127,7 +137,7 @@ public class GUIEngine implements IUIEngine, KeyListener{
 	}
 	
 	private int screenShift(int location) {
-		if(location - 8 >= 0) {
+		if((location - 5) >= 0) {
 			return 2;
 		}
 		else {
@@ -151,6 +161,7 @@ public class GUIEngine implements IUIEngine, KeyListener{
 		
 		bTextPanel = new JPanel();
 		bTextPanel.setSize(BATTLE_SCRN_SIZE, BATTLE_SCRN_SIZE/4);
+		bTextPanel.setLayout(new GridLayout(0,2));
 		bTextPanel.setBackground(Color.BLACK);
 		bTextPanel.setLocation(frame.getWidth()/2 - BATTLE_SCRN_SIZE/2, frame.getHeight()/2 + BATTLE_SCRN_SIZE/4);
 		bTextPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 10));
@@ -160,6 +171,11 @@ public class GUIEngine implements IUIEngine, KeyListener{
 		statsText.setFont(new Font("Consolas",1,20));
 		statsText.setForeground(Color.WHITE);
 		bTextPanel.add(statsText);
+		
+		enemyStats = new JLabel();
+		enemyStats.setFont(new Font("Consolas",1,20));
+		enemyStats.setForeground(Color.WHITE);
+		bTextPanel.add(enemyStats, 0 ,1);
 		//bTextPanel.add(textIn);
 		
 		panel.add(bTextPanel);

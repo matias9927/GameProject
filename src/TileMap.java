@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class TileMap extends Location{
 	
-	public Tile[][] map = new Tile[30][30]; //might use a map
+	public Tile[][] map = new Tile[12][12]; //might use a map
 	//window variable
 	
 	TileMap(String name) {

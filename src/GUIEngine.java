@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Map;
 import java.util.Scanner;
 
 import javax.swing.BorderFactory;
@@ -20,7 +21,7 @@ import javax.swing.SwingConstants;
 public class GUIEngine implements IUIEngine, KeyListener{
 	
 	int SCALING = 75;
-	int SIZE = 750;
+	int SIZE = 750; 
 	int BATTLE_SCRN_SIZE = 600;
 	Scanner input = new Scanner(System.in);
 	JTextField textIn = new JTextField(10);
@@ -57,13 +58,13 @@ public class GUIEngine implements IUIEngine, KeyListener{
 		world.checkPlayerTile(p);
 		for(int i = 0; i < 10; i++) {
 			for(int j = 0; j < 10; j++) {
-				System.out.print(world.map[i][j]);
+				System.out.print(world.map[i + p.getPosition().x][j + p.getPosition().y]);
 			}
 			System.out.println();
 		}
 		
-		draw(panel.getGraphics(), world);
-		draw(panel.getGraphics(), p);
+		draw(panel.getGraphics(), world, p);
+		//draw(panel.getGraphics(), p);
 	}
 	
 	public void updateBattle(Player p, Enemy e) {
@@ -116,11 +117,21 @@ public class GUIEngine implements IUIEngine, KeyListener{
 		g.drawImage(p.sprite, p.getPosition().x * SCALING, p.getPosition().y * SCALING, SCALING, SCALING, null);
 	}
 	
-	public void draw(Graphics g, TileMap w) {
+	public void draw(Graphics g, TileMap w, Player p) {
 		for(int j = 0; j < 10; j++) {
 			for(int i = 0; i < 10; i++) {
-				g.drawImage(w.map[i][j].sprite, i * SCALING, j * SCALING, SCALING, SCALING, null);
+				g.drawImage(w.map[i + screenShift(p.getPosition().x)][j + screenShift(p.getPosition().y)].sprite, i * SCALING, j * SCALING, SCALING, SCALING, null);
 			}
+		}
+		g.drawImage(p.sprite, p.getPosition().x * SCALING, p.getPosition().y * SCALING, SCALING, SCALING, null);
+	}
+	
+	private int screenShift(int location) {
+		if(location - 8 >= 0) {
+			return 2;
+		}
+		else {
+			return 0;
 		}
 	}
 	

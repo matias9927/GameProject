@@ -12,11 +12,6 @@ public class Tile {
 	public boolean isOpen;
 	public Image sprite;
 	public ArrayList<Enemy> monsters;
-	public static int[][] MonsterStats = { 
-			/*Jelli*/ {5, 1, 1, 55},
-			/*Big Jelli*/ {10, 2, 2, 10},
-			/*Batz*/ {8, 3, 1, 15}
-	};
 
 	Tile(TileType t) {
 		type = t;
@@ -25,7 +20,8 @@ public class Tile {
 		switch(type) {
 		case GRASS:	sprite = ImageIO.read(new File("src\\Sprites\\grass.png"));
 					isOpen = true;
-					monsters.add(new Enemy("Jelli", MonsterStats[0]));
+					monsters.add(new Enemy("Gloop"));
+					monsters.add(new Enemy("Lion"));
 					break;
 		case MOUNTAIN:	sprite = ImageIO.read(new File("src\\Sprites\\mountain.png"));
 						isOpen = false;
@@ -44,8 +40,12 @@ public class Tile {
 	
 	public Enemy enemyEncounter(Player p) {
 		Random rand = new Random();
-		if(rand.nextInt(100) > 50) {
+		int chance = rand.nextInt(100);
+		if(chance > 900) {
 			return monsters.get(0);
+		}
+		else if(chance > 850) {
+			return monsters.get(1);
 		}
 		else {
 			return null;

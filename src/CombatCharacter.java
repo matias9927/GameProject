@@ -33,8 +33,8 @@ public class CombatCharacter extends Character{
 		return String.format("%s\n%s", getName(), getStats());
 	}
 	
-	public void takeDamage(int damage) {
-		System.out.printf("%s takes %d damage!\n",name, damage);
+	/*public void takeDamage(int damage) {
+		//System.out.printf("%s takes %d damage!\n",name, damage);
 		HP -= damage;
 		if(HP <= 0) {
 			HP = 0;
@@ -44,7 +44,7 @@ public class CombatCharacter extends Character{
 	
 	public void dealDamage(CombatCharacter target) {
 		int damage = 0;
-		System.out.printf("%s attacks %s!\n", name, target.getName());
+		//System.out.printf("%s attacks %s!\n", name, target.getName());
 		if(attack - target.defense < 0) {
 			damage = 0;
 		}
@@ -52,6 +52,37 @@ public class CombatCharacter extends Character{
 			damage = attack - target.defense;
 		}
 		target.takeDamage(damage);
+	}*/
+	
+	public String takeDamage(int damage) {
+		//System.out.printf("%s takes %d damage!\n",name, damage);
+		HP -= damage;
+		if(HP <= 0) {
+			HP = 0;
+			System.out.printf("%s is slain!\n", name);
+		}
+		return String.format("%s takes %d damage!\n",name, damage);
+	}
+	
+	public String dealDamage(CombatCharacter target) {
+		int damage = 0;
+		//System.out.printf("%s attacks %s!\n", name, target.getName());
+		if(attack - target.defense < 0) {
+			damage = 0;
+		}
+		else {
+			damage = attack - target.defense;
+		}
+		//target.takeDamage(damage);
+		return String.format("%s attacks %s!\n", name, target.getName()) + target.takeDamage(damage);
+	}
+	
+	public String attackMessage(CombatCharacter target) {
+		return String.format("%s attacks %s!\n", name, target.getName());
+	}
+	
+	public String damageMessage(int damage) {
+		return String.format("%s takes %d damage!\n",name, damage);
 	}
 
 }

@@ -45,25 +45,25 @@ public class Game {
 	
 	public void movePlayer(String direction, TileMap world, Player p) {
 		if(canMove(direction, world, p)) {
-			world.map[(int)p.position.getY()][(int)p.position.getX()].isOpen = true;
+			world.map[(int)p.position.getX()][(int)p.position.getY()].isOpen = true;
 			switch(direction) {
 			case "right":
-					world.map[(int)p.position.getY()][(int)p.position.getX() + 1].isOpen = false;
+					world.map[(int)p.position.getX() + 1][(int)p.position.getY()].isOpen = false;
 					p.position.move((int)p.position.getX()+1, (int)p.position.getY());
 					p.sprite = p.right;
 					break;
 			case "left":	
-					world.map[(int)p.position.getY()][(int)p.position.getX() - 1].isOpen = false;
+					world.map[(int)p.position.getX() - 1][(int)p.position.getY()].isOpen = false;
 					p.position.move((int)p.position.getX() - 1, (int)p.position.getY());
 					p.sprite = p.left;
 					break;
 			case "down":	
-					world.map[(int)p.position.getY() + 1][(int)p.position.getX()].isOpen = false;
+					world.map[(int)p.position.getX()][(int)p.position.getY() + 1].isOpen = false;
 					p.position.move((int)p.position.getX(), (int)p.position.getY() + 1);
 					p.sprite = p.down;
 					break;
 			case "up":	
-				world.map[(int)p.position.getY() - 1][(int)p.position.getX()].isOpen = false;
+				world.map[(int)p.position.getX()][(int)p.position.getY() - 1].isOpen = false;
 				p.position.move((int)p.position.getX(), (int)p.position.getY() - 1);
 				break;
 			default:

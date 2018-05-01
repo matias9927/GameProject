@@ -7,6 +7,8 @@ public interface IUIEngine {
 	
 	void displayDialogue(String d);
 	
+	void displayPlayerStats(String d);
+	
 	void displayEnemyStats(String d);
 	
 	String movePlayer();
@@ -14,6 +16,8 @@ public interface IUIEngine {
 	void showBattleScreen();
 	
 	void updateBattle(Player p, Enemy e);
+	
+	void endBattle();
 	
 
 }

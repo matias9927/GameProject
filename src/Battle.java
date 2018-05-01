@@ -13,43 +13,53 @@ public class Battle {
 		ui.showBattleScreen();
 	}
 	
+	private void wait(int time) {
+		try {
+			TimeUnit.SECONDS.sleep(time);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			//
+		}
+	}
+	
 	public void battle(Player player, Enemy enemy) {
 		boolean battling = true;
 		int turn = 0;
 		String command;
+		ui.updateBattle(player, enemy);
 		ui.displayDialogue(String.format("Battle has begun! %s has attacked!", enemy.getName()));
+		wait(1);
 		
 		while(battling) {
-			ui.updateBattle(player, enemy);
 			turn += 1;
-			ui.displayDialogue(String.format("\nTurn: %d\n", turn));
-			ui.displayDialogue(player.getCombatInfo());
-			ui.displayEnemyStats(enemy.getCombatInfo());
+			ui.displayDialogue(String.format("Turn: %d\n", turn));
 			command = ui.getUserInput();
 			if(command.equals("attack")) {
-				player.dealDamage(enemy);
+				ui.displayDialogue(player.dealDamage(enemy));
+				ui.updateBattle(player, enemy);
+				wait(1);
 				if(enemy.HP == 0) {
 					ui.displayDialogue(String.format("Battle end. %s wins!\n", player.getName()));
+					wait(1);
 					ui.displayDialogue(String.format("%s gets %d experience!\n", player.getName(), enemy.experience));
 					player.experience += enemy.experience;
 					player.levelUp();
 					battling = false;
-					try {
-						TimeUnit.SECONDS.sleep(2);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						//
-					}
-					return;
+					wait(2);
+					break;
+					//return;
 				}
 			}
-			enemy.dealDamage(player);
+			ui.displayDialogue(enemy.dealDamage(player));
+			ui.updateBattle(player, enemy);
+			wait(1);
 			if(player.HP == 0) {
 				ui.displayDialogue("Battle end. Game over...");
 				battling = false;
 			}
 		}
 		enemy.HP = enemy.maxHP;
+		ui.endBattle();
 	}
 
 }

@@ -19,7 +19,15 @@ public class TextUIEngine implements IUIEngine{
 		//
 	}
 	
+	public void endBattle() {
+		
+	}
+	
 	public void displayDialogue(String d) {
+		System.out.println(d);
+	}
+	
+	public void displayPlayerStats(String d) {
 		System.out.println(d);
 	}
 	

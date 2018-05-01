@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class TileMap extends Location{
 	
-	public Tile[][] map = new Tile[12][12]; //might use a map
+	public Tile[][] map = new Tile[16][16]; //might use a map
 	//window variable
 	
 	TileMap(String name) {
@@ -21,9 +21,9 @@ public class TileMap extends Location{
 	}
 	
 	public void checkPlayerTile(Player p) {
-		for(int i = 0; i < map.length; i++) {
-			for(int j = 0; j < map.length ; j++) {
-				if(i == (int)p.getPosition().getY() && j == (int)p.getPosition().getX()) {
+		for(int j = 0; j < map.length; j++) {
+			for(int i = 0; i < map.length ; i++) {
+				if(i == (int)p.getPosition().getX() && j == (int)p.getPosition().getY()) {
 					map[i][j].isOpen = false;
 				}
 			}
@@ -31,8 +31,8 @@ public class TileMap extends Location{
 	}
 	
 	public void generateMap() {
-		for(int i = 0; i < map.length; i++) {
-			for(int j = 0; j < map.length ; j++) {
+		for(int j = 0; j < map.length; j++) {
+			for(int i = 0; i < map.length ; i++) {
 				map[i][0] = new Tile(Tile.TileType.MOUNTAIN);
 				map[i][map.length - 1] = new Tile(Tile.TileType.MOUNTAIN);
 				map[0][j] = new Tile(Tile.TileType.MOUNTAIN);
@@ -45,7 +45,10 @@ public class TileMap extends Location{
 				map[i][j] = new Tile(Tile.TileType.GRASS);
 				
 			}
-		}	
+		}
+		map[8][8] = new Tile(Tile.TileType.MOUNTAIN);
+		map[9][8] = new Tile(Tile.TileType.MOUNTAIN);
+		map[10][8] = new Tile(Tile.TileType.MOUNTAIN);
 	}
 	
 

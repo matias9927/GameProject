@@ -108,7 +108,7 @@ public class GUIEngine implements IUIEngine, KeyListener{
 			}
 			System.out.println();
 		}
-		
+		System.out.printf("%b %b %b", world.map[8][8].isOpen, world.map[9][8].isOpen, world.map[10][8].isOpen);
 		draw(panel.getGraphics(), world, p);
 		//draw(panel.getGraphics(), p);
 	}

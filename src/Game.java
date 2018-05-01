@@ -26,16 +26,16 @@ public class Game {
 	
 	public boolean canMove(String direction, TileMap world, Player p) {
 		if(direction.equals("right")) {
-			return world.map[p.position.y][(int)p.position.x + 1].isOpen;
+			return world.map[p.position.x + 1][(int)p.position.y].isOpen;
 		}
 		if(direction.equals("left")) {
-			return world.map[(int)p.position.getY()][(int)p.position.getX() - 1].isOpen;
+			return world.map[(int)p.position.getX() - 1][(int)p.position.getY()].isOpen;
 		}
 		if(direction.equals("down")) {
-			return world.map[(int)p.position.getY() + 1][(int)p.position.getX()].isOpen;
+			return world.map[(int)p.position.getX()][(int)p.position.getY() + 1].isOpen;
 		}
 		if(direction.equals("up")) {
-			return world.map[(int)p.position.getY() - 1][(int)p.position.getX()].isOpen;
+			return world.map[(int)p.position.getX()][(int)p.position.getY() - 1].isOpen;
 		}
 		else {
 			ui.displayDialogue("Invalid move");

@@ -42,10 +42,11 @@ public class Battle {
 					ui.displayDialogue(String.format("Battle end. %s wins!\n", player.getName()));
 					wait(1);
 					ui.displayDialogue(String.format("%s gets %d experience!\n", player.getName(), enemy.experience));
+					wait(1);
 					player.experience += enemy.experience;
-					player.levelUp();
+					ui.displayDialogue(player.levelUp());
 					battling = false;
-					wait(2);
+					wait(3);
 					break;
 					//return;
 				}

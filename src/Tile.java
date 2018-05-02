@@ -26,7 +26,7 @@ public class Tile {
 		case MOUNTAIN:	sprite = ImageIO.read(new File("src\\Sprites\\mountain.png"));
 						isOpen = false;
 						break;
-		case WATER:	sprite = ImageIO.read(new File("src\\Sprites\\mountain.png"));
+		case WATER:	sprite = ImageIO.read(new File("src\\Sprites\\watertile.png"));
 						break;
 	}
 		}catch(IOException e) {
@@ -63,6 +63,9 @@ public class Tile {
 			else {
 				return " 0 ";
 			}
+		}
+		if(type == TileType.WATER) {
+			return " ~ ";
 		}
 		else {
 			return "None";

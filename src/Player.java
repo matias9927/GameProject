@@ -38,7 +38,7 @@ public class Player extends CombatCharacter{
 		sprite = down;
 	}
 	
-	public void levelUp() {
+	public String levelUp() {
 		if(experience >= level * 50) {
 			experience -= (level * 50);
 			level += 1;
@@ -49,9 +49,10 @@ public class Player extends CombatCharacter{
 			
 			HP = maxHP;
 			MP = maxMP;
-			System.out.printf("%s leveled up to level %d!\n", name, level);
-			System.out.println(getStats());
+			//System.out.println(getStats());
+			return String.format("%s leveled up to level %d!\n", name, level) + getStats();
 		}
+		return null;
 	}
 	
 	public void interact() {

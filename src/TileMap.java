@@ -46,9 +46,9 @@ public class TileMap extends Location{
 				
 			}
 		}
-		map[8][8] = new Tile(Tile.TileType.MOUNTAIN);
-		map[9][8] = new Tile(Tile.TileType.MOUNTAIN);
-		map[10][8] = new Tile(Tile.TileType.MOUNTAIN);
+		map[8][8] = new Tile(Tile.TileType.WATER);
+		map[9][8] = new Tile(Tile.TileType.WATER);
+		map[10][8] = new Tile(Tile.TileType.WATER);
 	}
 	
 

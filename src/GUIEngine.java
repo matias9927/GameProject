@@ -5,11 +5,15 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 import java.util.Scanner;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -35,6 +39,8 @@ public class GUIEngine implements IUIEngine, KeyListener{
 	private JPanel playerStatPanel;
 	private JPanel enemyStatPanel;
 	private JLabel dialogue;
+	public Image backg;
+	
 	
 	public GUIEngine() {
 		frame = new JFrame();
@@ -56,6 +62,8 @@ public class GUIEngine implements IUIEngine, KeyListener{
 		bPanel.setBackground(Color.GREEN);
 		bPanel.setLocation(frame.getWidth()/2 - BATTLE_SCRN_SIZE/2, frame.getHeight()/2 - BATTLE_SCRN_SIZE/2);
 		bPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 10));
+		
+		
 		
 		bTextPanel = new JPanel();
 		bTextPanel.setSize(BATTLE_SCRN_SIZE + SCALING, BATTLE_SCRN_SIZE/3);
@@ -108,7 +116,6 @@ public class GUIEngine implements IUIEngine, KeyListener{
 			}
 			System.out.println();
 		}
-		System.out.printf("%b %b %b", world.map[8][8].isOpen, world.map[9][8].isOpen, world.map[10][8].isOpen);
 		draw(panel.getGraphics(), world, p);
 		//draw(panel.getGraphics(), p);
 	}

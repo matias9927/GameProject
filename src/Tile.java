@@ -71,4 +71,16 @@ public class Tile {
 			return "None";
 		}
 	}
+	
+	public static Tile fromString(String s) {
+		if(s.equals("0")) {
+			return new Tile(TileType.GRASS);
+		}
+		else if(s.equals("1")) {
+			return new Tile(TileType.MOUNTAIN);
+		}
+		else {
+			return null;
+		}
+	}
 }

@@ -26,8 +26,8 @@ import javax.swing.SwingConstants;
 public class GUIEngine implements IUIEngine, KeyListener{
 	
 	int SCALING = 75;
-	int SIZE = 750; 
-	int BATTLE_SCRN_SIZE = 450; //600
+	int SIZE = 750; //750
+	int BATTLE_SCRN_SIZE = 450;
 	Scanner input = new Scanner(System.in);
 	JTextField textIn = new JTextField(10);
 	private JFrame frame;
@@ -59,7 +59,7 @@ public class GUIEngine implements IUIEngine, KeyListener{
 		
 		bPanel = new JPanel();
 		bPanel.setSize(BATTLE_SCRN_SIZE, BATTLE_SCRN_SIZE);
-		bPanel.setBackground(Color.GREEN);
+		bPanel.setBackground(Color.LIGHT_GRAY);
 		bPanel.setLocation(frame.getWidth()/2 - BATTLE_SCRN_SIZE/2, frame.getHeight()/2 - BATTLE_SCRN_SIZE/2);
 		bPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 10));
 		
@@ -67,7 +67,6 @@ public class GUIEngine implements IUIEngine, KeyListener{
 		
 		bTextPanel = new JPanel();
 		bTextPanel.setSize(BATTLE_SCRN_SIZE + SCALING, BATTLE_SCRN_SIZE/3);
-		//bTextPanel.setLayout(new GridLayout(0,2));
 		bTextPanel.setBackground(Color.BLACK);
 		bTextPanel.setLocation(frame.getWidth()/2 - BATTLE_SCRN_SIZE/2 - SCALING/2, frame.getHeight()/2 + BATTLE_SCRN_SIZE/4);
 		bTextPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 10));
@@ -110,8 +109,8 @@ public class GUIEngine implements IUIEngine, KeyListener{
 	
 	public void updateScreen(TileMap world, Player p) {
 		world.checkPlayerTile(p);
-		for(int j = 0; j < 16; j++) {
-			for(int i = 0; i < 16; i++) {
+		for(int j = 0; j < world.map.length; j++) {
+			for(int i = 0; i < world.map[0].length; i++) {
 				System.out.print(world.map[i][j]);
 			}
 			System.out.println();
@@ -186,22 +185,31 @@ public class GUIEngine implements IUIEngine, KeyListener{
 		g.drawImage(p.sprite, p.getPosition().x * SCALING, p.getPosition().y * SCALING, SCALING, SCALING, null);
 	}
 	
-	public void draw(Graphics g, TileMap w, Player p) {
+	/*public void draw(Graphics g, TileMap w, Player p) {
 		for(int j = 0; j < 10; j++) {
 			for(int i = 0; i < 10; i++) {
-				g.drawImage(w.map[i + screenShift(p.getPosition().x)][j + screenShift(p.getPosition().y)].sprite, i * SCALING, j * SCALING, SCALING, SCALING, null);
+				g.drawImage(w.map[i + screenShift(p.getPosition().x, w)][j + screenShift(p.getPosition().y, w)].sprite, i * SCALING, j * SCALING, SCALING, SCALING, null);
 			}
 		}
-		g.drawImage(p.sprite, (p.getPosition().x - screenShift(p.getPosition().x)) * SCALING, (p.getPosition().y - screenShift(p.getPosition().y)) * SCALING, SCALING, SCALING, null);
+		g.drawImage(p.sprite, (p.getPosition().x - screenShift(p.getPosition().x, w)) * SCALING, (p.getPosition().y - screenShift(p.getPosition().y, w)) * SCALING, SCALING, SCALING, null);
+	}*/
+	
+	public void draw(Graphics g, TileMap w, Player p) {
+		for(int j = 0; j < 10; j++) { //Number of tiles on screen
+			for(int i = 0; i < 10; i++) {
+				g.drawImage(w.map[i + screenShift(p.getPosition().x, w)][j + screenShift(p.getPosition().y, w)].sprite, i * SCALING, j * SCALING, SCALING, SCALING, null);
+			}
+		}
+		g.drawImage(p.sprite, (p.getPosition().x - screenShift(p.getPosition().x, w)) * SCALING, (p.getPosition().y - screenShift(p.getPosition().y, w)) * SCALING, SCALING, SCALING, null);
 	}
 	
-	private int screenShift(int location) {
-		if(location > 5) {
-			if(location < 11) {
+	private int screenShift(int location, TileMap w) {
+		if(location > 5) { //not on left edge
+			if(location < w.map.length-5) {  //in middle
 				return location - 5;
 			}
-			else {
-				return 6;
+			else { //right of map
+				return 6; 
 			}
 		}
 		else {

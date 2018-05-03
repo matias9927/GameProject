@@ -1,5 +1,9 @@
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class TileMap extends Location{
 	
@@ -22,7 +26,7 @@ public class TileMap extends Location{
 	
 	public void checkPlayerTile(Player p) {
 		for(int j = 0; j < map.length; j++) {
-			for(int i = 0; i < map.length ; i++) {
+			for(int i = 0; i < map[0].length; i++) {
 				if(i == (int)p.getPosition().getX() && j == (int)p.getPosition().getY()) {
 					map[i][j].isOpen = false;
 				}
@@ -30,7 +34,7 @@ public class TileMap extends Location{
 		}
 	}
 	
-	public void generateMap() {
+	/*public void generateMap() {
 		for(int j = 0; j < map.length; j++) {
 			for(int i = 0; i < map.length ; i++) {
 				map[i][0] = new Tile(Tile.TileType.MOUNTAIN);
@@ -49,6 +53,25 @@ public class TileMap extends Location{
 		map[8][8] = new Tile(Tile.TileType.WATER);
 		map[9][8] = new Tile(Tile.TileType.WATER);
 		map[10][8] = new Tile(Tile.TileType.WATER);
+	}*/
+	
+	public void generateMap() {
+		//String line;
+		String[] line;
+		try {
+			File f = new File("src\\Maps\\map1.txt");
+			Scanner m = new Scanner(f);
+			for(int j = 0; j < map.length; j++) {
+				line = m.nextLine().split(",");
+				for(int i = 0; i < line.length; i++) {
+					map[i][j] = Tile.fromString(line[i]);
+				}
+			}
+		}
+		catch(Exception e) {
+			//
+		}
+		//System.out.println(map[0].length);
 	}
 	
 

@@ -52,7 +52,7 @@ public class Player extends CombatCharacter{
 			//System.out.println(getStats());
 			return String.format("%s leveled up to level %d!\n", name, level) + getStats();
 		}
-		return null;
+		return "";
 	}
 	
 	public void interact() {

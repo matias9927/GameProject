@@ -7,7 +7,7 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 
 public class Tile {
-	public enum TileType {GRASS, MOUNTAIN, WATER};
+	public enum TileType {GRASS, MOUNTAIN, WATER, WARP};
 	public TileType type;
 	public boolean isOpen;
 	public Image sprite;
@@ -28,6 +28,9 @@ public class Tile {
 						break;
 		case WATER:	sprite = ImageIO.read(new File("src\\Sprites\\watertile.png"));
 						break;
+		case WARP:	sprite = ImageIO.read(new File("src\\Sprites\\grass.png"));
+					isOpen = true;
+					break;
 	}
 		}catch(IOException e) {
 			//pass
@@ -41,10 +44,10 @@ public class Tile {
 	public Enemy enemyEncounter(Player p) {
 		Random rand = new Random();
 		int chance = rand.nextInt(100);
-		if(chance > 90) {
+		if(chance > 900) {
 			return monsters.get(0);
 		}
-		else if(chance > 85) {
+		else if(chance > 850) {
 			return monsters.get(1);
 		}
 		else {
@@ -67,6 +70,9 @@ public class Tile {
 		if(type == TileType.WATER) {
 			return " ~ ";
 		}
+		if(type == TileType.WARP) {
+			return " @ ";
+		}
 		else {
 			return "None";
 		}
@@ -78,6 +84,9 @@ public class Tile {
 		}
 		else if(s.equals("1")) {
 			return new Tile(TileType.MOUNTAIN);
+		}
+		else if(s.equals("@")) {
+			return new Tile(TileType.WARP);
 		}
 		else {
 			return null;

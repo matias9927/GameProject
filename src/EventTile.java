@@ -17,8 +17,9 @@ public class EventTile extends Tile{
 		//Print dialogue d
 	}
 	
-	public void warp(int x, int y) {
-		//Warp player to position x,y
+	public void warp(int x, int y, TileMap m, Player p) {
+		//Warp player to position x,y on map m
+		//if(p.getPosition()m.equals(obj))
 	}
 	
 	public void damage(Player p) {

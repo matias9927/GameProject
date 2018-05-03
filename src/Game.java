@@ -21,6 +21,9 @@ public class Game {
 			ui.updateScreen(world, hero);
 			//movePlayer(ui.getUserInput(), world, hero);
 			movePlayer(ui.movePlayer(), world, hero);
+			if(world.map[hero.getPosition().x][hero.getPosition().y].type == Tile.TileType.WARP) {
+				world.warp(hero, 1, 1, "map2");
+			}
 		}
 	}
 	
@@ -69,7 +72,7 @@ public class Game {
 			default:
 				break;
 			}
-			Enemy encounter = world.map[(int)p.position.getY()][(int)p.position.getX()].enemyEncounter(p);
+			Enemy encounter = world.map[(int)p.position.getX()][(int)p.position.getY()].enemyEncounter(p);
 			if(encounter != null) {
 				engageBattle(p, encounter);
 			}

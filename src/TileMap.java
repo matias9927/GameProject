@@ -12,7 +12,7 @@ public class TileMap extends Location{
 	
 	TileMap(String name) {
 		super(name);
-		generateMap();
+		generateMap("map1");
 	}
 	
 	public String getMonsterList(){
@@ -32,6 +32,12 @@ public class TileMap extends Location{
 				}
 			}
 		}
+	}
+	
+	public void warp(Player p, int x, int y, String mapName) {
+		p.getPosition().x = x;
+		p.getPosition().y = y;
+		generateMap(mapName);
 	}
 	
 	/*public void generateMap() {
@@ -55,11 +61,11 @@ public class TileMap extends Location{
 		map[10][8] = new Tile(Tile.TileType.WATER);
 	}*/
 	
-	public void generateMap() {
-		//String line;
+	public void generateMap(String mapFile) {
+		String path = String.format("src\\Maps\\%s.txt", mapFile);
 		String[] line;
 		try {
-			File f = new File("src\\Maps\\map1.txt");
+			File f = new File(path);
 			Scanner m = new Scanner(f);
 			for(int j = 0; j < map.length; j++) {
 				line = m.nextLine().split(",");

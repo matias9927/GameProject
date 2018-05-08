@@ -67,6 +67,7 @@ public class Game {
 			case "up":	
 				world.map[(int)p.position.getX()][(int)p.position.getY() - 1].isOpen = false;
 				p.position.move((int)p.position.getX(), (int)p.position.getY() - 1);
+				p.sprite = p.up;
 				break;
 			default:
 				break;

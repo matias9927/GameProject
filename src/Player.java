@@ -32,6 +32,7 @@ public class Player extends CombatCharacter{
 			down = ImageIO.read(new File("src\\Sprites\\overworld_player_straight.png"));
 			left =  ImageIO.read(new File("src\\Sprites\\overworld_player_left.png"));
 			right = ImageIO.read(new File("src\\Sprites\\overworld_player_right.png"));
+			up = ImageIO.read(new File("src\\Sprites\\overworld_player_up.png"));
 		} catch(IOException e) {
 			System.out.println("Image not found!");
 		}

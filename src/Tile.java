@@ -44,10 +44,10 @@ public class Tile {
 	public Enemy enemyEncounter(Player p) {
 		Random rand = new Random();
 		int chance = rand.nextInt(100);
-		if(chance > 900) {
+		if(chance > 95) {
 			return monsters.get(0);
 		}
-		else if(chance > 850) {
+		else if(chance > 92) {
 			return monsters.get(1);
 		}
 		else {

@@ -19,7 +19,6 @@ public class Game {
 		Player hero = new Player(name);
 		while(isPlaying) {
 			ui.updateScreen(world, hero);
-			//movePlayer(ui.getUserInput(), world, hero);
 			movePlayer(ui.movePlayer(), world, hero);
 			if(world.map[hero.getPosition().x][hero.getPosition().y].type == Tile.TileType.WARP) {
 				world.warp(hero, 1, 1, "map2");

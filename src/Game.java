@@ -29,6 +29,7 @@ public class Game {
 		System.out.println("What is your name?");
 		String name = ui.getUserInput();
 		Player hero = new Player(name);
+		Sound.soundPlay("src\\Sound\\Pokemon SilverGoldCrystal - New Bark Town.wav");
 		ui.updateScreen(world, hero);
 		while(isPlaying) {
 			if(isMoving){

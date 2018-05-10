@@ -12,7 +12,7 @@ public class TileMap extends Location{
 	
 	TileMap(String name) {
 		super(name);
-		generateMap("map3");
+		generateMap("map1");
 	}
 	
 	public String getMonsterList(){

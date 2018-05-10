@@ -26,6 +26,7 @@ public class Battle {
 		boolean battling = true;
 		int turn = 0;
 		String command;
+		String newCommand = "";
 		ui.updateBattle(player, enemy);
 		ui.displayDialogue(String.format("Battle has begun! %s has attacked!", enemy.getName()));
 		wait(1);
@@ -33,7 +34,7 @@ public class Battle {
 		while(battling) {
 			turn += 1;
 			ui.displayDialogue(String.format("Turn: %d\n", turn));
-			command = ui.getUserInput();
+			command = ui.getCombatInput();
 			if(command.equals("attack")) {
 				ui.displayDialogue(player.dealDamage(enemy));
 				ui.updateBattle(player, enemy);

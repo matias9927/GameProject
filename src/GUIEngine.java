@@ -6,6 +6,9 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
@@ -23,7 +26,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-public class GUIEngine implements IUIEngine, KeyListener{
+public class GUIEngine implements IUIEngine{
 	
 	int SCALING = 75;
 	int SIZE = 750; //750
@@ -39,7 +42,12 @@ public class GUIEngine implements IUIEngine, KeyListener{
 	private JPanel playerStatPanel;
 	private JPanel enemyStatPanel;
 	private JLabel dialogue;
+	private JPanel dialogueBox;
+	private JLabel text;
 	public Image backg;
+	public String lastKey = "";
+	public JTextField command;
+	public String combatCommand = "";
 	
 	
 	public GUIEngine() {
@@ -98,13 +106,52 @@ public class GUIEngine implements IUIEngine, KeyListener{
 		dialogue.setFont(new Font("Consolas",1,20));
 		dialogue.setForeground(Color.WHITE);
 		bTextPanel.add(dialogue);
+		
+		dialogueBox = new JPanel();
+		dialogueBox.setSize(BATTLE_SCRN_SIZE + SCALING, BATTLE_SCRN_SIZE/3);
+		dialogueBox.setBackground(Color.BLACK);
+		dialogueBox.setLocation(frame.getWidth()/2 - BATTLE_SCRN_SIZE/2 - SCALING/2, frame.getHeight()/2 + BATTLE_SCRN_SIZE/4);
+		dialogueBox.setBorder(BorderFactory.createLineBorder(Color.WHITE, 10));
+		
+		frame.addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				int key = e.getKeyCode();
+				switch(key) {
+					case KeyEvent.VK_DOWN:
+						lastKey = "down";
+						break;
+					case KeyEvent.VK_UP:
+						lastKey = "up";
+						break;
+					case KeyEvent.VK_LEFT:
+						lastKey = "left";
+						break;
+					case KeyEvent.VK_RIGHT:
+						lastKey = "right";
+						break;
+					case KeyEvent.VK_CONTROL:
+						lastKey = "attack";
+					default:
+						lastKey = "";
+						break;
+				}
+			}
+			public void keyReleased(KeyEvent e) {
+				lastKey = "";
+			}
+		});
 	}
 	
 	public String getUserInput() {
 		//return textIn.getText();
-		return JOptionPane.showInputDialog("Enter and action");
+		//return JOptionPane.showInputDialog("Enter and action");
+		return lastKey;
 		/*System.out.println("Enter and action");
 		return input.nextLine();*/
+	}
+	
+	public String getCombatInput() {
+		return JOptionPane.showInputDialog("Enter and action");
 	}
 	
 	public void updateScreen(TileMap world, Player p) {
@@ -116,7 +163,6 @@ public class GUIEngine implements IUIEngine, KeyListener{
 			System.out.println();
 		}
 		draw(panel.getGraphics(), world, p);
-		//draw(panel.getGraphics(), p);
 	}
 	
 	public void updateBattle(Player p, Enemy e) {
@@ -126,10 +172,11 @@ public class GUIEngine implements IUIEngine, KeyListener{
 	}
 	
 	public void displayDialogue(String d) {
+		//panel.add(bTextPanel);
 		String e = "<html>" + d.replace("\n", "<br>") + "</html>";
 		dialogue.setText(e);
-		//enemyStats.setText(e);
 		System.out.println(d);
+		//panel.remove(bTextPanel);
 	}
 
 	public void displayPlayerStats(String d) {
@@ -140,45 +187,13 @@ public class GUIEngine implements IUIEngine, KeyListener{
 	
 	public void displayEnemyStats(String d) {
 		String e = "<html>" + d.replace("\n", "<br>") + "</html>";
-		//statsText.setText(e);
+		//statsText.setText(e); 
 		enemyStats.setText(e);
 		System.out.println(d);
 	}
 	
 	public String movePlayer() {
 		return getUserInput();
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		int key = e.getKeyCode();
-		switch(key) {
-			case KeyEvent.VK_UP:
-				//up
-				break;
-			case KeyEvent.VK_DOWN:
-				//down
-				break;
-			case KeyEvent.VK_LEFT:
-				//left
-				break;
-			case KeyEvent.VK_RIGHT:
-				movePlayer();
-				break;
-		}
-		
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	public void draw(Graphics g, Player p) {
@@ -270,8 +285,6 @@ public class GUIEngine implements IUIEngine, KeyListener{
 		panel.add(bTextPanel);
 		panel.add(playerStatPanel);
 		panel.add(enemyStatPanel);
-		//panel.moveToFront(bTextPanel);
-		//panel.moveToFront(playerStatPanel);
 	}
 	
 	public void endBattle() {

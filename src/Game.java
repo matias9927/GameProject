@@ -1,24 +1,40 @@
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class Game {
 	
 	private IUIEngine ui;
 	public TileMap world;
 	public boolean isPlaying;
+	public boolean isMoving;
 	
 	public Game(IUIEngine ui) {
 		this.ui = ui;
 		world = new TileMap("Overworld");
 		isPlaying = true;
+		isMoving = false;
+	}
+	
+	private void wait(int time) {
+		try {
+			TimeUnit.MILLISECONDS.sleep(time);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			//
+		}
 	}
 	
 	public void startgame() {
 		System.out.println("What is your name?");
 		String name = ui.getUserInput();
 		Player hero = new Player(name);
+		ui.updateScreen(world, hero);
 		while(isPlaying) {
-			ui.updateScreen(world, hero);
+			if(isMoving){
+				ui.updateScreen(world, hero);
+				wait(250);
+			}
 			movePlayer(ui.movePlayer(), world, hero);
 			if(world.map[hero.getPosition().x][hero.getPosition().y].type == Tile.TileType.WARP) {
 				world.warp(hero, 1, 1, "map2");
@@ -39,6 +55,10 @@ public class Game {
 		if(direction.equals("up")) {
 			return world.map[(int)p.position.getX()][(int)p.position.getY() - 1].isOpen;
 		}
+		if(direction.equals("")) {
+			isMoving = false;
+			return false;
+		}
 		else {
 			ui.displayDialogue("Invalid move");
 			return false;
@@ -53,23 +73,28 @@ public class Game {
 					world.map[(int)p.position.getX() + 1][(int)p.position.getY()].isOpen = false;
 					p.position.move((int)p.position.getX()+1, (int)p.position.getY());
 					p.sprite = p.right;
+					isMoving = true;
 					break;
 			case "left":	
 					world.map[(int)p.position.getX() - 1][(int)p.position.getY()].isOpen = false;
 					p.position.move((int)p.position.getX() - 1, (int)p.position.getY());
 					p.sprite = p.left;
+					isMoving = true;
 					break;
 			case "down":	
 					world.map[(int)p.position.getX()][(int)p.position.getY() + 1].isOpen = false;
 					p.position.move((int)p.position.getX(), (int)p.position.getY() + 1);
 					p.sprite = p.down;
+					isMoving = true;
 					break;
 			case "up":	
 				world.map[(int)p.position.getX()][(int)p.position.getY() - 1].isOpen = false;
 				p.position.move((int)p.position.getX(), (int)p.position.getY() - 1);
 				p.sprite = p.up;
+				isMoving = true;
 				break;
-			default:
+			case "":
+				isMoving = false;
 				break;
 			}
 			Enemy encounter = world.map[(int)p.position.getX()][(int)p.position.getY()].enemyEncounter(p);
@@ -84,7 +109,7 @@ public class Game {
 	}
 	
 	public void engageBattle(Player p, Enemy e) {
-		Battle b = new Battle(p, e, ui); //new BattleUI()
+		Battle b = new Battle(p, e, ui); 
 		b.battle(p, e);
 	}
 	

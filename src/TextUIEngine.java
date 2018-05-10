@@ -40,6 +40,10 @@ public class TextUIEngine implements IUIEngine{
 		return input.nextLine();
 	}
 	
+	public String getCombatInput() {
+		return getUserInput();
+	}
+	
 	public String movePlayer() {
 		return getUserInput();
 	}

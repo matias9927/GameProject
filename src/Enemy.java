@@ -27,6 +27,9 @@ public class Enemy extends CombatCharacter{
 				sprite = ImageIO.read(new File("src\\Sprites\\gloopmonster.png"));
 				stats = MonsterStats[0];
 				break;
+			default:
+				stats = MonsterStats[0];
+				break;
 			}
 			
 		} catch (IOException e) {

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public interface IUIEngine {
 	
@@ -5,7 +6,7 @@ public interface IUIEngine {
 	
 	String getCombatInput();
 	
-	void updateScreen(TileMap world, Player p);
+	void updateScreen(TileMap world, Player p, ArrayList<Boss> objects);
 	
 	void displayDialogue(String d);
 	

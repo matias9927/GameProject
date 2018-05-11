@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 public class Player extends CombatCharacter{
 	
 	public ArrayList<Item> inventory = new ArrayList<Item>();
-	Point position = new Point(1,1); //Starts on row 5 column 5
+	Point position = new Point(1,1); //Starts on row 1 column 1
 	public enum orientation {RIGHT, LEFT, UP, DOWN};
 	public orientation direction = orientation.RIGHT; 
 	public Image right;

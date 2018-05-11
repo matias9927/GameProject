@@ -13,6 +13,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -154,7 +155,7 @@ public class GUIEngine implements IUIEngine{
 		return JOptionPane.showInputDialog("Enter and action");
 	}
 	
-	public void updateScreen(TileMap world, Player p) {
+	public void updateScreen(TileMap world, Player p, ArrayList<Boss> objects) {
 		world.checkPlayerTile(p);
 		for(int j = 0; j < world.map.length; j++) {
 			for(int i = 0; i < world.map[0].length; i++) {
@@ -162,7 +163,7 @@ public class GUIEngine implements IUIEngine{
 			}
 			System.out.println();
 		}
-		draw(panel.getGraphics(), world, p);
+		draw(panel.getGraphics(), world, p, objects);
 	}
 	
 	public void updateBattle(Player p, Enemy e) {
@@ -209,10 +210,16 @@ public class GUIEngine implements IUIEngine{
 		g.drawImage(p.sprite, (p.getPosition().x - screenShift(p.getPosition().x, w)) * SCALING, (p.getPosition().y - screenShift(p.getPosition().y, w)) * SCALING, SCALING, SCALING, null);
 	}*/
 	
-	public void draw(Graphics g, TileMap w, Player p) {
+	public void draw(Graphics g, TileMap w, Player p, ArrayList<Boss> objects) {
 		for(int j = 0; j < 10; j++) { //Number of tiles on screen
 			for(int i = 0; i < 10; i++) {
 				g.drawImage(w.map[i + screenShift(p.getPosition().x, w)][j + screenShift(p.getPosition().y, w)].sprite, i * SCALING, j * SCALING, SCALING, SCALING, null);
+			}
+		}
+		for(Boss b : objects) {
+			if(b.position.x - screenShift(p.position.x, w) > 0 && b.position.y - screenShift(p.position.y, w) > 0) {
+				//g.drawImage(b.sprite, (b.getPosition().x)* SCALING, (b.getPosition().y) * SCALING, SCALING, SCALING, null);
+				g.drawImage(b.overworldSprite, (b.getPosition().x - screenShift(p.getPosition().x, w))* SCALING, (b.getPosition().y - screenShift(p.getPosition().y, w)) * SCALING, SCALING, SCALING, null);
 			}
 		}
 		g.drawImage(p.sprite, (p.getPosition().x - screenShift(p.getPosition().x, w)) * SCALING, (p.getPosition().y - screenShift(p.getPosition().y, w)) * SCALING, SCALING, SCALING, null);

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TextUIEngine implements IUIEngine{
@@ -5,7 +6,7 @@ public class TextUIEngine implements IUIEngine{
 	
 	Scanner input = new Scanner(System.in);
 	
-	public void updateScreen(TileMap world, Player p) {
+	public void updateScreen(TileMap world, Player p, ArrayList<Boss> objects) {
 		world.checkPlayerTile(p);
 		for(int i = 0; i < world.map.length; i++) {
 			for(int j = 0; j < world.map.length; j++) {

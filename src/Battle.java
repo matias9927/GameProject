@@ -25,6 +25,7 @@ public class Battle {
 	public void battle(Player player, Enemy enemy) {
 		boolean battling = true;
 		int turn = 0;
+		
 		Sound.soundPlay("src\\Sound\\GS_Rivial.mid");
 		String command;
 		ui.updateBattle(player, enemy);

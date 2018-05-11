@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
@@ -8,12 +9,16 @@ public class Game {
 	public TileMap world;
 	public boolean isPlaying;
 	public boolean isMoving;
+	public ArrayList<Boss> objects;
+	public int location;
 	
 	public Game(IUIEngine ui) {
 		this.ui = ui;
 		world = new TileMap("Overworld");
 		isPlaying = true;
 		isMoving = false;
+		location = 0;
+		objects = new ArrayList<Boss>();
 	}
 	
 	private void wait(int time) {
@@ -30,15 +35,24 @@ public class Game {
 		String name = ui.getUserInput();
 		Player hero = new Player(name);
 		Sound.soundPlay("src\\Sound\\Pokemon SilverGoldCrystal - New Bark Town.wav");
-		ui.updateScreen(world, hero);
+
+		ui.updateScreen(world, hero, objects);
 		while(isPlaying) {
 			if(isMoving){
-				ui.updateScreen(world, hero);
+				ui.updateScreen(world, hero, objects);
 				wait(250);
 			}
 			movePlayer(ui.movePlayer(), world, hero);
 			if(world.map[hero.getPosition().x][hero.getPosition().y].type == Tile.TileType.WARP) {
+				location = 1;
 				world.warp(hero, 1, 1, "map2");
+				Boss villain = new Boss("BadMan");
+				objects.add(villain);
+			}
+			if(location == 1) {
+				if(hero.getPosition().x == objects.get(0).getPosition().x && hero.getPosition().y == objects.get(0).getPosition().y) {
+					engageBattle(hero, objects.get(0));
+				}
 			}
 		}
 	}

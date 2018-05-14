@@ -19,7 +19,8 @@ public class Boss extends Enemy{
 		experience = 120;
 		HP = maxHP;
 		try {
-			overworldSprite = ImageIO.read(new File("src\\Sprites\\dummyBoss.png"));
+			overworldSprite = ImageIO.read(new File("src\\Sprites\\boss_overworld.png"));
+			sprite = ImageIO.read(new File("src\\Sprites\\boss_inbattle.png"));
 		}catch(IOException e) {
 			//ree
 		}

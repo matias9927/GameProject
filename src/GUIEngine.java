@@ -49,6 +49,7 @@ public class GUIEngine implements IUIEngine{
 	public String lastKey = "";
 	public JTextField command;
 	public String combatCommand = "";
+	public Image titleScreen;
 	
 	
 	public GUIEngine() {
@@ -65,6 +66,12 @@ public class GUIEngine implements IUIEngine{
 		panel.setVisible(true);
 		
 		frame.add(panel);
+		try {
+			titleScreen = ImageIO.read(new File("src\\Sprites\\simple_title.png"));
+		}catch(IOException e) {
+			System.out.println("No Title Screen");
+		}
+		panel.getGraphics().drawImage(titleScreen, 0, 0, SIZE, SIZE, null);
 		
 		bPanel = new JPanel();
 		bPanel.setSize(BATTLE_SCRN_SIZE, BATTLE_SCRN_SIZE);

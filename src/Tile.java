@@ -88,6 +88,9 @@ public class Tile {
 		else if(s.equals("@")) {
 			return new Tile(TileType.WARP);
 		}
+		else if(s.equals("!")) {
+			return new Tile(TileType.WATER);
+		}
 		else {
 			return null;
 		}

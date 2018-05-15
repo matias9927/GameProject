@@ -67,5 +67,9 @@ public class Player extends CombatCharacter{
 	public Point getPosition() {
 		return position;
 	}
+	
+	public String getCombatInfo() {
+		return String.format("%s\nLevel: %s\n%s", getName(), level, getStats());
+	}
 
 }

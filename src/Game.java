@@ -32,7 +32,7 @@ public class Game {
 	
 	public void startgame() {
 		System.out.println("What is your name?");
-		String name = ui.getUserInput();
+		String name = ui.getCombatInput();//ui.getUserInput();
 		Player hero = new Player(name);
 		Sound.soundPlay("src\\Sound\\Pokemon SilverGoldCrystal - New Bark Town.wav");
 
@@ -52,6 +52,7 @@ public class Game {
 			if(location == 1) {
 				if(hero.getPosition().x == objects.get(0).getPosition().x && hero.getPosition().y == objects.get(0).getPosition().y) {
 					engageBattle(hero, objects.get(0));
+					objects.remove(0);
 				}
 			}
 		}

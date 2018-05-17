@@ -30,8 +30,8 @@ import javax.swing.SwingConstants;
 public class GUIEngine implements IUIEngine{
 	
 	int SCALING = 75;
-	int SIZE = 750; //750
-	int BATTLE_SCRN_SIZE = 450;
+	int SIZE = 750; //Size of game window
+	int BATTLE_SCRN_SIZE = 450; //Size of battle window
 	Scanner input = new Scanner(System.in);
 	JTextField textIn = new JTextField(10);
 	private JFrame frame;
@@ -151,11 +151,7 @@ public class GUIEngine implements IUIEngine{
 	}
 	
 	public String getUserInput() {
-		//return textIn.getText();
-		//return JOptionPane.showInputDialog("Enter and action");
 		return lastKey;
-		/*System.out.println("Enter and action");
-		return input.nextLine();*/
 	}
 	
 	public String getCombatInput() {

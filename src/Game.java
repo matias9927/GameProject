@@ -1,3 +1,8 @@
+/* Game.java
+ * Matias Saavedra Silva and Johnny Pabst
+ * Main class that runs the game, it takes in a UI 
+ * Defines the in-game events and methods that allow the player character to move
+ */
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -12,6 +17,10 @@ public class Game {
 	public ArrayList<Boss> objects;
 	public int location;
 	
+	/* Takes an IUIEngine as a parameter 
+	 * Creates a tile map, sets the default location, creates the list of objects,
+	 * and defines sets the isPlaying boolean to true
+	 */
 	public Game(IUIEngine ui) {
 		this.ui = ui;
 		world = new TileMap("Overworld");
@@ -21,6 +30,9 @@ public class Game {
 		objects = new ArrayList<Boss>();
 	}
 	
+	/* Takes the time in milliseconds and pauses the game for 
+	 * the input time
+	 */
 	private void wait(int time) {
 		try {
 			TimeUnit.MILLISECONDS.sleep(time);
@@ -30,27 +42,32 @@ public class Game {
 		}
 	}
 	
+	/* Contains the main events of the game, prompts the user for their name
+	 * and starts the game loop. 
+	 */
 	public void startgame() {
 		System.out.println("What is your name?");
-		String name = ui.getCombatInput();//ui.getUserInput();
+		String name = ui.getCombatInput();
 		Player hero = new Player(name);
 		Sound.soundPlay("src\\Sound\\Pokemon SilverGoldCrystal - New Bark Town.wav");
-
-		ui.updateScreen(world, hero, objects);
+		ui.updateScreen(world, hero, objects); //Draw the screen before the player has done anything
 		while(isPlaying) {
+			//Redraws the screen only if the player moves
 			if(isMoving){
 				ui.updateScreen(world, hero, objects);
 				wait(250);
 			}
 			movePlayer(ui.movePlayer(), world, hero);
+			//Move player to the next map if they step on a warp tile and add boss to the objects list
 			if(world.map[hero.getPosition().x][hero.getPosition().y].type == Tile.TileType.WARP) {
 				location = 1;
 				world.warp(hero, 1, 1, "map2");
 				Boss villain = new Boss("BadMan");
 				objects.add(villain);
 			}
+			//Initiate battle with boss if the player steps on their tile
 			if(location == 1) {
-				if(hero.getPosition().x == objects.get(0).getPosition().x && hero.getPosition().y == objects.get(0).getPosition().y) {
+				if(hero.getPosition().x == objects.get(0).getPosition().x && hero.getPosition().y == objects.get(0).getPosition().y) { //error heer
 					engageBattle(hero, objects.get(0));
 					objects.remove(0);
 				}
@@ -58,6 +75,9 @@ public class Game {
 		}
 	}
 	
+	/* Takes the direction to move as a string, the current tile map, and the player
+	 * Checks if the tile ahead of the player in the specified direction is open
+	 */
 	public boolean canMove(String direction, TileMap world, Player p) {
 		if(direction.equals("right")) {
 			return world.map[p.position.x + 1][(int)p.position.y].isOpen;
@@ -81,6 +101,10 @@ public class Game {
 		}
 	}
 	
+	/* Takes the direction to move as a string, the current tile map, and the player
+	 * Tests if the player can move in the specified direction and if possible
+	 * moves them to that tile. 
+	 */
 	public void movePlayer(String direction, TileMap world, Player p) {
 		if(canMove(direction, world, p)) {
 			world.map[(int)p.position.getX()][(int)p.position.getY()].isOpen = true;
@@ -113,6 +137,7 @@ public class Game {
 				isMoving = false;
 				break;
 			}
+			//Calls an enemy encounter every time the player moves
 			Enemy encounter = world.map[(int)p.position.getX()][(int)p.position.getY()].enemyEncounter(p);
 			if(encounter != null) {
 				engageBattle(p, encounter);
@@ -124,11 +149,15 @@ public class Game {
 		
 	}
 	
+	/* Takes a player and enemy object
+	 * Creates an instance of battle with the player and enemy
+	 */
 	public void engageBattle(Player p, Enemy e) {
 		Battle b = new Battle(p, e, ui); 
 		b.battle(p, e);
 	}
 	
+	//Creates an instance of the game and starts the game
 	public static void main(String[] args) {
 		Game game = new Game(new GUIEngine()); 
 		game.startgame();

@@ -1,9 +1,13 @@
+/* Player.java
+ * Matias Saavedra Silva and Johnny Pabst
+ * Outlines the properties of the player character such as name, stats, sprite,
+ * and associated functions such as raising the player's stats during a level up
+ */
 import java.awt.Image;
 import java.awt.Point;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import javax.imageio.ImageIO;
 
 public class Player extends CombatCharacter{
@@ -17,16 +21,16 @@ public class Player extends CombatCharacter{
 	public Image up;
 	public Image down;
 	
+	
+	/* Constructor takes a String for the player's name and defines their base stats
+	 * Sets sprites for each direction and sets default position to facing down
+	 */
 	Player(String CharName){
 		super(CharName);
 		maxHP += 5;
-		//maxMP += 5;
 		attack += 2;
 		defense += 2;
-		//intelligence += 1;
-
 		HP = maxHP;
-		//MP = maxMP;
 		
 		try {
 			down = ImageIO.read(new File("src\\Sprites\\overworld_player_straight.png"));
@@ -39,6 +43,10 @@ public class Player extends CombatCharacter{
 		sprite = down;
 	}
 	
+	/* Raises player stats if their experience is over a certain threshold
+	 * Experience rolls over after it is reset during a level up
+	 * Returns a string with level up dialogue
+	 */
 	public String levelUp() {
 		if(experience >= level * 50) {
 			experience -= (level * 50);
@@ -50,7 +58,6 @@ public class Player extends CombatCharacter{
 			
 			HP = maxHP;
 			MP = maxMP;
-			//System.out.println(getStats());
 			return String.format("%s leveled up to level %d!\n", name, level) + getStats();
 		}
 		return "";
@@ -68,6 +75,9 @@ public class Player extends CombatCharacter{
 		return position;
 	}
 	
+	/* Overrides CombatCharacter's method
+	 * returns a string with the player's name, stats, and level
+	 */
 	public String getCombatInfo() {
 		return String.format("%s\nLevel: %s\n%s", getName(), level, getStats());
 	}

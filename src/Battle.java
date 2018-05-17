@@ -1,3 +1,8 @@
+/* Battle.java
+ * Matias Saavedra Silva and Johnny Pabst
+ * Details the battle system where the player and an enemy take turns dealing
+ * damage until one is defeated
+ */
 import java.util.concurrent.TimeUnit;
 
 public class Battle {

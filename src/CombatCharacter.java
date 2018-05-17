@@ -1,4 +1,8 @@
-
+/* CombatCharacter.java
+ * Matias Saavedra Silva and Johnny Pabst
+ * Details the properties associated with characters capable of
+ * engaging in battle
+ */
 public class CombatCharacter extends Character{
 	
 	protected int maxHP;
@@ -11,6 +15,7 @@ public class CombatCharacter extends Character{
 	protected int gold;
 	protected int level;
 	
+	//Takes a name and sets default values to their stats
 	CombatCharacter(String name){
 		super(name);
 		maxHP = 5;
@@ -25,37 +30,20 @@ public class CombatCharacter extends Character{
 		experience = 0;
 	}
 	
+	//Returns the character's stats as a formatted string 
 	public String getStats() {
 		return String.format("HP: %d/%d\nMP: %d/%d\nATK: %d\nDEF: %d\n", HP, maxHP, MP, maxMP, attack, defense);
 	}
 	
+	//Returns the character's name and stats formatted together to be displayed in combat
 	public String getCombatInfo() {
 		return String.format("%s\n%s", getName(), getStats());
 	}
 	
-	/*public void takeDamage(int damage) {
-		//System.out.printf("%s takes %d damage!\n",name, damage);
-		HP -= damage;
-		if(HP <= 0) {
-			HP = 0;
-			System.out.printf("%s is slain!\n", name);
-		}
-	}
-	
-	public void dealDamage(CombatCharacter target) {
-		int damage = 0;
-		//System.out.printf("%s attacks %s!\n", name, target.getName());
-		if(attack - target.defense < 0) {
-			damage = 0;
-		}
-		else {
-			damage = attack - target.defense;
-		}
-		target.takeDamage(damage);
-	}*/
-	
+	/* Takes a damage value and lowers the character's HP by that amount
+	 * and returns a string displaying the dialogue for taking damage
+	 */
 	public String takeDamage(int damage) {
-		//System.out.printf("%s takes %d damage!\n",name, damage);
 		HP -= damage;
 		if(HP <= 0) {
 			HP = 0;
@@ -64,23 +52,27 @@ public class CombatCharacter extends Character{
 		return String.format("%s takes %d damage!\n",name, damage);
 	}
 	
+	/* Takes a target that is another CombatCharacter and 
+	 * Calculates the damage dealt to the target and returns a string
+	 * with the associated dialogue
+	 */
 	public String dealDamage(CombatCharacter target) {
 		int damage = 0;
-		//System.out.printf("%s attacks %s!\n", name, target.getName());
 		if(attack - target.defense < 0) {
 			damage = 0;
 		}
 		else {
 			damage = attack - target.defense;
 		}
-		//target.takeDamage(damage);
 		return String.format("%s attacks %s!\n", name, target.getName()) + target.takeDamage(damage);
 	}
 	
+	//Returns a formatted string with the dialogue of the character attacking the target
 	public String attackMessage(CombatCharacter target) {
 		return String.format("%s attacks %s!\n", name, target.getName());
 	}
 	
+	//Returns string with dialogue for character receiving damage
 	public String damageMessage(int damage) {
 		return String.format("%s takes %d damage!\n",name, damage);
 	}

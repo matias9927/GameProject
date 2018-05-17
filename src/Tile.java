@@ -1,3 +1,8 @@
+/* Tile.java
+ * Matias Saavedra Silva and Johnny Pabst
+ * establishes the different tile properties and assigns the sprites
+ */
+
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
@@ -41,6 +46,7 @@ public class Tile {
 		return type;
 	}
 	
+	//assigns random encounter rates to traversable tiles
 	public Enemy enemyEncounter(Player p) {
 		Random rand = new Random();
 		int chance = rand.nextInt(100);
@@ -55,6 +61,8 @@ public class Tile {
 		}
 	}
 	
+	/* these two blocks assign tile types to characters, allowing for the conversion 
+	of the text files to graphical tile maps and vice versa*/
 	public String toString() {
 		if(type == TileType.MOUNTAIN) {
 			return " 1 ";

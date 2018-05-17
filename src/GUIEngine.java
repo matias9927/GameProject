@@ -1,3 +1,8 @@
+/* GUIEngine.java
+ * Matias Saavedra Silva and Johnny Pabst
+ * Draws all of the in-game graphics including the overworld and battle screen
+ */
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -51,7 +56,7 @@ public class GUIEngine implements IUIEngine{
 	public String combatCommand = "";
 	public Image titleScreen;
 	
-	
+	//this class establishes all frames and panels
 	public GUIEngine() {
 		frame = new JFrame();
 		frame.setUndecorated(true);
@@ -121,6 +126,7 @@ public class GUIEngine implements IUIEngine{
 		dialogueBox.setLocation(frame.getWidth()/2 - BATTLE_SCRN_SIZE/2 - SCALING/2, frame.getHeight()/2 + BATTLE_SCRN_SIZE/4);
 		dialogueBox.setBorder(BorderFactory.createLineBorder(Color.WHITE, 10));
 		
+		//key listener which allows arrow key movement in the overworld
 		frame.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
 				int key = e.getKeyCode();
@@ -150,14 +156,17 @@ public class GUIEngine implements IUIEngine{
 		});
 	}
 	
+	//Outputs the last key pressed by the player represented as a string
 	public String getUserInput() {
 		return lastKey;
 	}
 	
+	//Opens dialog box and returns the user input
 	public String getCombatInput() {
 		return JOptionPane.showInputDialog("Enter and action");
 	}
 	
+	//updates player location
 	public void updateScreen(TileMap world, Player p, ArrayList<Boss> objects) {
 		world.checkPlayerTile(p);
 		for(int j = 0; j < world.map.length; j++) {
@@ -169,12 +178,14 @@ public class GUIEngine implements IUIEngine{
 		draw(panel.getGraphics(), world, p, objects);
 	}
 	
+	//draws battle screen
 	public void updateBattle(Player p, Enemy e) {
 		draw(bPanel.getGraphics(), e);
 		displayPlayerStats(p.getCombatInfo());
 		displayEnemyStats(e.getCombatInfo());
 	}
 	
+	//displays NPC dialogue
 	public void displayDialogue(String d) {
 		//panel.add(bTextPanel);
 		String e = "<html>" + d.replace("\n", "<br>") + "</html>";
@@ -182,13 +193,15 @@ public class GUIEngine implements IUIEngine{
 		System.out.println(d);
 		//panel.remove(bTextPanel);
 	}
-
+	
+	//displays player attributes in battle screen
 	public void displayPlayerStats(String d) {
 		String e = "<html>" + d.replace("\n", "<br>") + "</html>";
 		playerStats.setText(e);
 		System.out.println(d);
 	}
 	
+	//displays enemy attributes in battle screen
 	public void displayEnemyStats(String d) {
 		String e = "<html>" + d.replace("\n", "<br>") + "</html>";
 		//statsText.setText(e); 
@@ -196,23 +209,15 @@ public class GUIEngine implements IUIEngine{
 		System.out.println(d);
 	}
 	
+	//Returns the user input to move the player
 	public String movePlayer() {
 		return getUserInput();
 	}
 	
-	public void draw(Graphics g, Player p) {
-		g.drawImage(p.sprite, p.getPosition().x * SCALING, p.getPosition().y * SCALING, SCALING, SCALING, null);
-	}
-	
-	/*public void draw(Graphics g, TileMap w, Player p) {
-		for(int j = 0; j < 10; j++) {
-			for(int i = 0; i < 10; i++) {
-				g.drawImage(w.map[i + screenShift(p.getPosition().x, w)][j + screenShift(p.getPosition().y, w)].sprite, i * SCALING, j * SCALING, SCALING, SCALING, null);
-			}
-		}
-		g.drawImage(p.sprite, (p.getPosition().x - screenShift(p.getPosition().x, w)) * SCALING, (p.getPosition().y - screenShift(p.getPosition().y, w)) * SCALING, SCALING, SCALING, null);
-	}*/
-	
+	/* Takes graphics component, current tile map, the player, and the array list of objects
+	 * and draws each tile that fits in the screen, the player sprite, and any objects.
+	 * The screen will shift when the player is near the edge of the screen
+	 */
 	public void draw(Graphics g, TileMap w, Player p, ArrayList<Boss> objects) {
 		for(int j = 0; j < 10; j++) { //Number of tiles on screen
 			for(int i = 0; i < 10; i++) {
@@ -228,6 +233,7 @@ public class GUIEngine implements IUIEngine{
 		g.drawImage(p.sprite, (p.getPosition().x - screenShift(p.getPosition().x, w)) * SCALING, (p.getPosition().y - screenShift(p.getPosition().y, w)) * SCALING, SCALING, SCALING, null);
 	}
 	
+	// shifts map according to movement to keep player centered
 	private int screenShift(int location, TileMap w) {
 		if(location > 5) { //not on left edge
 			if(location < w.map.length-5) {  //in middle
@@ -242,61 +248,20 @@ public class GUIEngine implements IUIEngine{
 		}
 	}
 	
+	//Takes graphics component and an enemy and draws them on the battle window
 	public void draw(Graphics g, Enemy e) {
 		g.drawImage(e.sprite, bPanel.getX() - SCALING/2, bPanel.getY() - SCALING, SCALING * 3, SCALING * 3, null);
 	}
 	
+	//Adds the battle screen components to the main game panel
 	public void showBattleScreen() {
-		String stats = String.format("<html>%s<br>HP: %d/%d<br>ATK: %d<br>DEF: %d</html>", "Matoos", 5,5,3,3);
-		/*bPanel = new JPanel();
-		bPanel.setSize(BATTLE_SCRN_SIZE, BATTLE_SCRN_SIZE);
-		bPanel.setBackground(Color.GREEN);
-		bPanel.setLocation(frame.getWidth()/2 - BATTLE_SCRN_SIZE/2, frame.getHeight()/2 - BATTLE_SCRN_SIZE/2);
-		bPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 10));
-		panel.add(bPanel);
-		panel.moveToFront(bPanel);
-		
-		bTextPanel = new JPanel();
-		bTextPanel.setSize(BATTLE_SCRN_SIZE + SCALING, BATTLE_SCRN_SIZE/3);
-		//bTextPanel.setLayout(new GridLayout(0,2));
-		bTextPanel.setBackground(Color.BLACK);
-		bTextPanel.setLocation(frame.getWidth()/2 - BATTLE_SCRN_SIZE/2 - SCALING/2, frame.getHeight()/2 + BATTLE_SCRN_SIZE/4);
-		bTextPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 10));
-		
-		
-		playerStatPanel = new JPanel();
-		playerStatPanel.setSize(BATTLE_SCRN_SIZE/3, BATTLE_SCRN_SIZE/2);
-		playerStatPanel.setBackground(Color.BLACK);
-		playerStatPanel.setLocation(bPanel.getLocation().x - bPanel.WIDTH - SCALING, bPanel.getLocation().y - bPanel.HEIGHT);
-		playerStatPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 10));
-		
-		enemyStatPanel = new JPanel();
-		enemyStatPanel.setSize(BATTLE_SCRN_SIZE/4, BATTLE_SCRN_SIZE/3);
-		enemyStatPanel.setBackground(Color.BLACK);
-		enemyStatPanel.setLocation(bPanel.getLocation().x + bPanel.getWidth(), bPanel.getLocation().y - bPanel.HEIGHT);
-		enemyStatPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 10));
-		
-		playerStats = new JLabel(); 
-		playerStats.setFont(new Font("Consolas",1,20));
-		playerStats.setForeground(Color.WHITE);
-		playerStatPanel.add(playerStats);
-		
-		enemyStats = new JLabel();
-		enemyStats.setFont(new Font("Consolas",1,20));
-		enemyStats.setForeground(Color.WHITE);
-		enemyStatPanel.add(enemyStats);
-		
-		dialogue = new JLabel();
-		dialogue.setFont(new Font("Consolas",1,20));
-		dialogue.setForeground(Color.WHITE);
-		bTextPanel.add(dialogue);*/
-		
 		panel.add(bPanel);
 		panel.add(bTextPanel);
 		panel.add(playerStatPanel);
 		panel.add(enemyStatPanel);
 	}
 	
+	//removes battle screen upon completion of battle
 	public void endBattle() {
 		panel.remove(bPanel);
 		panel.remove(bTextPanel);

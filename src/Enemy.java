@@ -1,13 +1,17 @@
+/* Enemy.java
+ * Matias Saavedra Silva and Johhny Pabst
+ * Defines the stats and sprites for various types of monsters
+ */
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import javax.imageio.ImageIO;
 
 public class Enemy extends CombatCharacter{
 	
 	public int spawnRate;
 	public ArrayList<Item> drops = new ArrayList<Item>();
+	//Stats are in order : HP, Attack, Defense, Experience
 	public static int[][] MonsterStats = { 
 			/*Gloop*/ {5, 1, 1, 55},
 			/*Big Gloop*/ {10, 2, 2, 10},
@@ -15,6 +19,9 @@ public class Enemy extends CombatCharacter{
 	};
 	public int[] stats;
 	
+	/* Takes the name of the enemy, depending on the name sets the stats and 
+	 * sprite to predefined values
+	 */
 	Enemy(String CharName){
 		super(CharName);
 		try {
@@ -42,12 +49,4 @@ public class Enemy extends CombatCharacter{
 		experience = stats[3];
 		HP = maxHP;
 	}
-	
-	public void specialMove(String tecName) {
-		//Do special move
-	}
-	
-	
-	
-
 }

@@ -1,3 +1,9 @@
+/* TextUIEngine.java
+ * Matias Saavedra Silva and Johnny Pabst
+ * used for early testing, handles engine in-text only
+ * prints out tileset and player location by matrix of characters
+ */
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -6,6 +12,7 @@ public class TextUIEngine implements IUIEngine{
 	
 	Scanner input = new Scanner(System.in);
 	
+	//updates and prints the tilemap and the player location as the user moves them around the map
 	public void updateScreen(TileMap world, Player p, ArrayList<Boss> objects) {
 		world.checkPlayerTile(p);
 		for(int i = 0; i < world.map.length; i++) {

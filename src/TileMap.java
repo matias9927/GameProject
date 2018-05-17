@@ -1,3 +1,8 @@
+/* TileMap.java
+ * Matias Saavedra Silva and Johnny Pabst
+ * Draws all of the in-game graphics including the overworld and battle screen
+ */
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -24,6 +29,7 @@ public class TileMap extends Location{
 		//
 	}
 	
+	
 	public void checkPlayerTile(Player p) {
 		for(int j = 0; j < map.length; j++) {
 			for(int i = 0; i < map[0].length; i++) {
@@ -34,6 +40,7 @@ public class TileMap extends Location{
 		}
 	}
 	
+	//moves the player to a different map
 	public void warp(Player p, int x, int y, String mapName) {
 		p.getPosition().x = x;
 		p.getPosition().y = y;
@@ -61,6 +68,8 @@ public class TileMap extends Location{
 		map[10][8] = new Tile(Tile.TileType.WATER);
 	}*/
 	
+	/*this function allows for the creation of various tilemaps via basic text files and generates the map 
+	based upon different characters associated with different types of tiles*/
 	public void generateMap(String mapFile) {
 		String path = String.format("src\\Maps\\%s.txt", mapFile);
 		String[] line;

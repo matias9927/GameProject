@@ -1,3 +1,8 @@
+/* GUIEngine.java
+ * Matias Saavedra Silva and Johnny Pabst
+ * Draws all of the in-game graphics including the overworld and battle screen
+ */
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -51,7 +56,7 @@ public class GUIEngine implements IUIEngine{
 	public String combatCommand = "";
 	public Image titleScreen;
 	
-	
+	//this class establishes all frames and panels
 	public GUIEngine() {
 		frame = new JFrame();
 		frame.setUndecorated(true);
@@ -121,6 +126,7 @@ public class GUIEngine implements IUIEngine{
 		dialogueBox.setLocation(frame.getWidth()/2 - BATTLE_SCRN_SIZE/2 - SCALING/2, frame.getHeight()/2 + BATTLE_SCRN_SIZE/4);
 		dialogueBox.setBorder(BorderFactory.createLineBorder(Color.WHITE, 10));
 		
+		//key listener which allows arrow key movement in the overworld
 		frame.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
 				int key = e.getKeyCode();
@@ -162,6 +168,7 @@ public class GUIEngine implements IUIEngine{
 		return JOptionPane.showInputDialog("Enter and action");
 	}
 	
+	//updates player location
 	public void updateScreen(TileMap world, Player p, ArrayList<Boss> objects) {
 		world.checkPlayerTile(p);
 		for(int j = 0; j < world.map.length; j++) {
@@ -173,12 +180,14 @@ public class GUIEngine implements IUIEngine{
 		draw(panel.getGraphics(), world, p, objects);
 	}
 	
+	//draws battle screen
 	public void updateBattle(Player p, Enemy e) {
 		draw(bPanel.getGraphics(), e);
 		displayPlayerStats(p.getCombatInfo());
 		displayEnemyStats(e.getCombatInfo());
 	}
 	
+	//displays NPC dialogue
 	public void displayDialogue(String d) {
 		//panel.add(bTextPanel);
 		String e = "<html>" + d.replace("\n", "<br>") + "</html>";
@@ -186,13 +195,15 @@ public class GUIEngine implements IUIEngine{
 		System.out.println(d);
 		//panel.remove(bTextPanel);
 	}
-
+	
+	//displays player attributes in battle screen
 	public void displayPlayerStats(String d) {
 		String e = "<html>" + d.replace("\n", "<br>") + "</html>";
 		playerStats.setText(e);
 		System.out.println(d);
 	}
 	
+	//displays enemy attributes in battle screen
 	public void displayEnemyStats(String d) {
 		String e = "<html>" + d.replace("\n", "<br>") + "</html>";
 		//statsText.setText(e); 
@@ -232,6 +243,7 @@ public class GUIEngine implements IUIEngine{
 		g.drawImage(p.sprite, (p.getPosition().x - screenShift(p.getPosition().x, w)) * SCALING, (p.getPosition().y - screenShift(p.getPosition().y, w)) * SCALING, SCALING, SCALING, null);
 	}
 	
+	// shifts map according to movement to keep player centered
 	private int screenShift(int location, TileMap w) {
 		if(location > 5) { //not on left edge
 			if(location < w.map.length-5) {  //in middle
@@ -301,6 +313,7 @@ public class GUIEngine implements IUIEngine{
 		panel.add(enemyStatPanel);
 	}
 	
+	//removes battle screen upon completion of battle
 	public void endBattle() {
 		panel.remove(bPanel);
 		panel.remove(bTextPanel);

@@ -12,7 +12,7 @@ import javax.imageio.ImageIO;
 
 public class Player extends CombatCharacter{
 	
-	public ArrayList<Item> inventory = new ArrayList<Item>();
+	//public ArrayList<Item> inventory = new ArrayList<Item>();
 	Point position = new Point(1,1); //Starts on row 1 column 1
 	public enum orientation {RIGHT, LEFT, UP, DOWN};
 	public orientation direction = orientation.RIGHT; 
@@ -63,14 +63,7 @@ public class Player extends CombatCharacter{
 		return "";
 	}
 	
-	public void interact() {
-		//Pressing z initiated interaction with npcs or objects
-	}
-	
-	public void addItem(Item i) {
-		//Add item to inventory
-	}
-	
+	//Returns position of character on the map
 	public Point getPosition() {
 		return position;
 	}

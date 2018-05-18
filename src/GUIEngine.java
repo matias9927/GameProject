@@ -100,9 +100,9 @@ public class GUIEngine implements IUIEngine{
 		playerStatPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 10));
 		
 		enemyStatPanel = new JPanel();
-		enemyStatPanel.setSize(BATTLE_SCRN_SIZE/4, BATTLE_SCRN_SIZE/3);
+		enemyStatPanel.setSize(BATTLE_SCRN_SIZE/3, BATTLE_SCRN_SIZE/3);
 		enemyStatPanel.setBackground(Color.BLACK);
-		enemyStatPanel.setLocation(bPanel.getLocation().x + bPanel.getWidth(), bPanel.getLocation().y - bPanel.HEIGHT);
+		enemyStatPanel.setLocation(bPanel.getLocation().x + bPanel.getWidth() - SCALING, bPanel.getLocation().y - bPanel.HEIGHT); 
 		enemyStatPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 10));
 		
 		playerStats = new JLabel(); 
@@ -163,7 +163,7 @@ public class GUIEngine implements IUIEngine{
 	
 	//Opens dialog box and returns the user input
 	public String getCombatInput() {
-		return JOptionPane.showInputDialog("Enter and action");
+		return JOptionPane.showInputDialog("Enter and action (type attack to fight)");
 	}
 	
 	//updates player location
@@ -226,7 +226,6 @@ public class GUIEngine implements IUIEngine{
 		}
 		for(Boss b : objects) {
 			if(b.position.x - screenShift(p.position.x, w) > 0 && b.position.y - screenShift(p.position.y, w) > 0) {
-				//g.drawImage(b.sprite, (b.getPosition().x)* SCALING, (b.getPosition().y) * SCALING, SCALING, SCALING, null);
 				g.drawImage(b.overworldSprite, (b.getPosition().x - screenShift(p.getPosition().x, w))* SCALING, (b.getPosition().y - screenShift(p.getPosition().y, w)) * SCALING, SCALING, SCALING, null);
 			}
 		}

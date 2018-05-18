@@ -35,5 +35,9 @@ public class Boss extends Enemy{
 	public Point getPosition() {
 		return position;
 	}
+	
+	public String showDialogue() {
+		return "I am the final boss!\nI am BadMan! Fear me!!";
+	}
 
 }

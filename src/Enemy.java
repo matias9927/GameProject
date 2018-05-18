@@ -9,8 +9,6 @@ import javax.imageio.ImageIO;
 
 public class Enemy extends CombatCharacter{
 	
-	public int spawnRate;
-	public ArrayList<Item> drops = new ArrayList<Item>();
 	//Stats are in order : HP, Attack, Defense, Experience
 	public static int[][] MonsterStats = { 
 			/*Gloop*/ {5, 1, 1, 55},
@@ -48,5 +46,10 @@ public class Enemy extends CombatCharacter{
 		defense = stats[2];
 		experience = stats[3];
 		HP = maxHP;
+	}
+	
+	//Return monster's dialogue before battle
+	public String showDialogue() {
+		return "";
 	}
 }

@@ -35,6 +35,8 @@ public class Tile {
 						break;
 		case WARP:	sprite = ImageIO.read(new File("src\\Sprites\\grass.png"));
 					isOpen = true;
+					monsters.add(new Enemy("Gloop"));
+					monsters.add(new Enemy("Lion"));
 					break;
 	}
 		}catch(IOException e) {
@@ -96,7 +98,7 @@ public class Tile {
 		else if(s.equals("@")) {
 			return new Tile(TileType.WARP);
 		}
-		else if(s.equals("!")) {
+		else if(s.equals("~")) {
 			return new Tile(TileType.WATER);
 		}
 		else {

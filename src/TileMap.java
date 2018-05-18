@@ -6,13 +6,14 @@
 import java.io.File;
 import java.util.Scanner;
 
-public class TileMap extends Location{
+public class TileMap {
 	
 	public Tile[][] map = new Tile[16][16]; //might use a map
+	public String name;
 	//window variable
 	
 	TileMap(String name) {
-		super(name);
+		this.name = name;
 		generateMap("map1");
 	}
 	

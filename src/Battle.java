@@ -39,9 +39,14 @@ public class Battle {
 		int turn = 0;
 		
 		String command;
-		ui.updateBattle(player, enemy); //Draw battle screen before player input
+		//ui.updateBattle(player, enemy); //Draw battle screen before player input
 		ui.displayDialogue(String.format("Battle has begun! %s has attacked!", enemy.getName()));
+		ui.updateBattle(player, enemy);
 		wait(1);
+		if(!enemy.showDialogue().equals("")) {
+			ui.displayDialogue(enemy.showDialogue());
+			wait(2);
+		}
 		
 		while(battling) {
 			turn += 1;
@@ -68,6 +73,7 @@ public class Battle {
 			wait(1);
 			if(player.HP == 0) {
 				ui.displayDialogue("Battle end. Game over...");
+				wait(3);
 				battling = false;
 			}
 		}

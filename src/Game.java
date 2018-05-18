@@ -69,12 +69,17 @@ public class Game {
 			}
 			//Initiate battle with boss if the player steps on their tile
 			if(location == 1) {
-				if(hero.getPosition().x == objects.get(0).getPosition().x && hero.getPosition().y == objects.get(0).getPosition().y) { //error heer
+				if(hero.getPosition().x == objects.get(0).getPosition().x && hero.getPosition().y == objects.get(0).getPosition().y) {
+					music.soundStop();
+					music.soundPlay(music.bossMusic);
 					engageBattle(hero, objects.get(0));
+					music.soundStop();
 					objects.remove(0);
+					isPlaying = false;
 				}
 			}
 		}
+		System.exit(0);
 	}
 	
 	/* Takes the direction to move as a string, the current tile map, and the player

@@ -38,7 +38,6 @@ public class Battle {
 		boolean battling = true;
 		int turn = 0;
 		
-		Sound.soundPlay("src\\Sound\\GS_Rivial.mid");
 		String command;
 		ui.updateBattle(player, enemy); //Draw battle screen before player input
 		ui.displayDialogue(String.format("Battle has begun! %s has attacked!", enemy.getName()));

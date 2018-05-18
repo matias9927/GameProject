@@ -16,6 +16,7 @@ public class Game {
 	public boolean isMoving;
 	public ArrayList<Boss> objects;
 	public int location;
+	public Sound music;
 	
 	/* Takes an IUIEngine as a parameter 
 	 * Creates a tile map, sets the default location, creates the list of objects,
@@ -28,6 +29,7 @@ public class Game {
 		isMoving = false;
 		location = 0;
 		objects = new ArrayList<Boss>();
+		music = new Sound();
 	}
 	
 	/* Takes the time in milliseconds and pauses the game for 
@@ -49,8 +51,8 @@ public class Game {
 		System.out.println("What is your name?");
 		String name = ui.getCombatInput();
 		Player hero = new Player(name);
-		Sound.soundPlay("src\\Sound\\Pokemon SilverGoldCrystal - New Bark Town.wav");
 		ui.updateScreen(world, hero, objects); //Draw the screen before the player has done anything
+		music.soundPlay(music.overworldMusic);
 		while(isPlaying) {
 			//Redraws the screen only if the player moves
 			if(isMoving){
@@ -140,7 +142,11 @@ public class Game {
 			//Calls an enemy encounter every time the player moves
 			Enemy encounter = world.map[(int)p.position.getX()][(int)p.position.getY()].enemyEncounter(p);
 			if(encounter != null) {
+				music.soundStop();
+				music.soundPlay(music.battleMusic);
 				engageBattle(p, encounter);
+				music.soundStop();
+				music.soundPlay(music.overworldMusic);
 			}
 		}
 		else {
